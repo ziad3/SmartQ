@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>MainLoadingPage.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #808080;}
+.s3 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+MainLoadingPage.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.myapplication.activities</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">androidx.appcompat.app.AppCompatActivity</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.example.myapplication.R</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.myapplication.UserMethods</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.myapplication.activities.company.CompanyBranchesActivity</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.auth.FirebaseAuth</span><span class="s0">;</span>
+
+
+<span class="s0">public class </span><span class="s1">MainLoadingPage </span><span class="s0">extends </span><span class="s1">AppCompatActivity {</span>
+
+    <span class="s2">//final variables</span>
+    <span class="s0">public final static </span><span class="s1">String COMPANY = </span><span class="s3">&quot;Company&quot;</span><span class="s0">;</span>
+    <span class="s0">public final static </span><span class="s1">String CUSTOMER = </span><span class="s3">&quot;Customer&quot;</span><span class="s0">;</span>
+    <span class="s0">public final static </span><span class="s1">String ADMINE = </span><span class="s3">&quot;Admine&quot;</span><span class="s0">;</span>
+    <span class="s0">public final static </span><span class="s1">String ADMINP = </span><span class="s3">&quot;Adminep&quot;</span><span class="s0">;</span>
+    <span class="s0">public final static </span><span class="s1">String BRANCH = </span><span class="s3">&quot;Branch&quot;</span><span class="s0">;</span>
+    <span class="s0">public final static </span><span class="s1">String QUEUE = </span><span class="s3">&quot;Queue&quot;</span><span class="s0">;</span>
+    <span class="s0">public final static </span><span class="s1">String QUEUE1 = </span><span class="s3">&quot;queue1&quot;</span><span class="s0">;</span>
+    <span class="s0">public final static </span><span class="s1">String QUEUE2 = </span><span class="s3">&quot;queue2&quot;</span><span class="s0">;</span>
+    <span class="s0">public final static </span><span class="s1">String CUSTOMER_ID_LIST = </span><span class="s3">&quot;customerListUpdates&quot;</span><span class="s0">;</span>
+    <span class="s0">public final static </span><span class="s1">String USER_TYPE = </span><span class="s3">&quot;UserType&quot;</span><span class="s0">;</span>
+    <span class="s0">public final static </span><span class="s1">String USER_ID = </span><span class="s3">&quot;userId&quot;</span><span class="s0">;</span>
+    <span class="s0">public final static </span><span class="s1">String BRANCH_CLASS = </span><span class="s3">&quot;branchClass&quot;</span><span class="s0">;</span>
+    <span class="s0">public final static </span><span class="s1">String Company_Control = </span><span class="s3">&quot;companyClass&quot;</span><span class="s0">;</span>
+    <span class="s0">public final static </span><span class="s1">String PANEL = </span><span class="s3">&quot;Panel&quot;</span><span class="s0">;</span>
+
+    <span class="s0">public final static </span><span class="s1">String LATITUDE = </span><span class="s3">&quot;latitude&quot;</span><span class="s0">;</span>
+    <span class="s0">public final static </span><span class="s1">String LONGITUDE = </span><span class="s3">&quot;longitude&quot;</span><span class="s0">;</span>
+    <span class="s0">public final static </span><span class="s1">String RADIUS = </span><span class="s3">&quot;radius&quot;</span><span class="s0">;</span>
+    <span class="s0">public final static </span><span class="s1">String COMPANY_ID = </span><span class="s3">&quot;companyID&quot;</span><span class="s0">;</span>
+    <span class="s0">public final static </span><span class="s1">String HOME_FRAGMENT = </span><span class="s3">&quot;homeFragment&quot;</span><span class="s0">;</span>
+    <span class="s0">public final static </span><span class="s1">String BRANCH_NAME = </span><span class="s3">&quot;branchName&quot;</span><span class="s0">;</span>
+
+
+
+    <span class="s0">private final </span><span class="s1">FirebaseAuth firebaseAuth = FirebaseAuth.getInstance()</span><span class="s0">;</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) {</span>
+        <span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span>
+        <span class="s1">setContentView(R.layout.activity_main_loading_page)</span><span class="s0">;</span>
+     <span class="s2">// startActivity(new Intent(getApplicationContext(), CompanyBranchesActivity.class));</span>
+
+        <span class="s1">getSupportActionBar().hide()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onStart() {</span>
+        <span class="s0">super</span><span class="s1">.onStart()</span><span class="s0">;</span>
+        <span class="s0">if</span><span class="s1">(firebaseAuth.getCurrentUser() != </span><span class="s0">null</span><span class="s1">)</span>
+            <span class="s1">UserMethods.determineUserTypeAndMoveToCorrectPage(</span><span class="s0">this</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s0">else</span><span class="s1">{</span>
+            <span class="s1">finish()</span><span class="s0">;</span>
+            <span class="s1">startActivity(</span><span class="s0">new </span><span class="s1">Intent(getApplicationContext()</span><span class="s0">, </span><span class="s1">LoginPageActivity.</span><span class="s0">class</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+    <span class="s1">}</span>
+
+
+
+<span class="s1">}</span></pre>
+</body>
+</html>

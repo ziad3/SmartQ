@@ -1,0 +1,125 @@
+<html>
+<head>
+<title>HomeViewModel.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+HomeViewModel.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.myapplication.activities.customer.ui.home</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">androidx.lifecycle.SavedStateHandle</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.lifecycle.ViewModel</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">HomeViewModel </span><span class="s0">extends </span><span class="s1">ViewModel {</span>
+    <span class="s0">private </span><span class="s1">SavedStateHandle state</span><span class="s0">;</span>
+<span class="s2">//    private FirebaseRecyclerAdapter&lt;Branch, CustomerBranchHolder&gt; firebaseRecyclerAdapter;</span>
+    <span class="s0">public </span><span class="s1">HomeViewModel(){</span>
+    <span class="s1">}</span>
+
+
+
+<span class="s2">//    @Override</span>
+<span class="s2">//    protected void onCleared() {</span>
+<span class="s2">//        super.onCleared();</span>
+<span class="s2">//        if(firebaseRecyclerAdapter != null)</span>
+<span class="s2">//            firebaseRecyclerAdapter.stopListening();</span>
+<span class="s2">//    }</span>
+
+<span class="s2">//    void setBranchRecyclerView(View root, FragmentManager parentFragmentManager){</span>
+<span class="s2">//        RelativeLayout progressBar = root.findViewById(R.id.progress_bar_branches_customer);</span>
+<span class="s2">//        RecyclerView recyclerView = root.findViewById(R.id.branches_list_customer_recycler_view);</span>
+<span class="s2">//        recyclerView.setLayoutManager(new LinearLayoutManager(root.getContext()));</span>
+<span class="s2">//</span>
+<span class="s2">//        progressBar.setVisibility(View.VISIBLE);</span>
+<span class="s2">//</span>
+<span class="s2">//        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();</span>
+<span class="s2">//        Query query = rootRef.child(BRANCH);</span>
+<span class="s2">//        FirebaseRecyclerOptions&lt;Branch&gt; firebaseRecyclerOptions = new FirebaseRecyclerOptions.Builder&lt;Branch&gt;()</span>
+<span class="s2">//                .setQuery(query, Branch.class)</span>
+<span class="s2">//                .build();</span>
+<span class="s2">//</span>
+<span class="s2">//        firebaseRecyclerAdapter = new FirebaseRecyclerAdapter&lt;Branch, CustomerBranchHolder&gt;(firebaseRecyclerOptions) {</span>
+<span class="s2">//            @Override</span>
+<span class="s2">//            protected void onBindViewHolder(@NonNull CustomerBranchHolder customerBranchHolder, int position, @NonNull Branch branch) {</span>
+<span class="s2">//                CustomerBranchHolder.setBranch(branch);</span>
+<span class="s2">//</span>
+<span class="s2">//                progressBar.setVisibility(View.GONE);</span>
+<span class="s2">//                customerBranchHolder.itemView.setOnClickListener(t -&gt;</span>
+<span class="s2">//                {</span>
+<span class="s2">//                    BranchDetailsFragment branchDetailsFragment = new BranchDetailsFragment();</span>
+<span class="s2">//                    Bundle bundle = new Bundle();</span>
+<span class="s2">//                    bundle.putSerializable(BRANCH,getItem(position));</span>
+<span class="s2">//                    branchDetailsFragment.setArguments(bundle);</span>
+<span class="s2">//                    parentFragmentManager.beginTransaction()</span>
+<span class="s2">////                            .addToBackStack(HOME_FRAGMENT)</span>
+<span class="s2">////                            .hide(homeFragment)</span>
+<span class="s2">//                            .replace(R.id.nav_host_fragment, branchDetailsFragment)</span>
+<span class="s2">//                            .commit();</span>
+<span class="s2">//                });</span>
+<span class="s2">//            }</span>
+<span class="s2">//</span>
+<span class="s2">//            @NonNull</span>
+<span class="s2">//            @Override</span>
+<span class="s2">//            public CustomerBranchHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {</span>
+<span class="s2">//                View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_branch_item_customer, parent, false);</span>
+<span class="s2">//                return new CustomerBranchHolder(view);</span>
+<span class="s2">//            }</span>
+<span class="s2">//</span>
+<span class="s2">//            @NonNull</span>
+<span class="s2">//            @Override</span>
+<span class="s2">//            public Branch getItem(int position) {</span>
+<span class="s2">//                return super.getItem(position);</span>
+<span class="s2">//            }</span>
+<span class="s2">//</span>
+<span class="s2">//            @NonNull</span>
+<span class="s2">//            @Override</span>
+<span class="s2">//            public DatabaseReference getRef(int position) {</span>
+<span class="s2">//                return super.getRef(position);</span>
+<span class="s2">//            }</span>
+<span class="s2">//</span>
+<span class="s2">//            @Override</span>
+<span class="s2">//            public void onDataChanged() {</span>
+<span class="s2">//                super.onDataChanged();</span>
+<span class="s2">//                if(getItemCount() == 0)</span>
+<span class="s2">//                    progressBar.setVisibility(View.GONE);</span>
+<span class="s2">//            }</span>
+<span class="s2">//        };</span>
+<span class="s2">//        recyclerView.setAdapter(firebaseRecyclerAdapter);</span>
+<span class="s2">//</span>
+<span class="s2">//        if(firebaseRecyclerAdapter != null)</span>
+<span class="s2">//            firebaseRecyclerAdapter.startListening();</span>
+<span class="s2">//</span>
+<span class="s2">//    }</span>
+<span class="s2">//</span>
+<span class="s2">//</span>
+<span class="s2">//    public static class CustomerBranchHolder extends RecyclerView.ViewHolder{</span>
+<span class="s2">//        private static TextView branchID, branchNameTextView,location,companyID, numberOfQueuesTextView;</span>
+<span class="s2">//</span>
+<span class="s2">//        public CustomerBranchHolder(View itemView) {</span>
+<span class="s2">//            super(itemView);</span>
+<span class="s2">//            branchNameTextView = itemView.findViewById(R.id.item_branch_name_customer);</span>
+<span class="s2">//            numberOfQueuesTextView = itemView.findViewById(R.id.short_description);</span>
+<span class="s2">//        }</span>
+<span class="s2">//</span>
+<span class="s2">//        public static void setBranch(Branch branch) {</span>
+<span class="s2">//            String branchName = branch.getBranchName();</span>
+<span class="s2">//            int branchQueueNumber = branch.getNumberOfQueues();</span>
+<span class="s2">//            branchNameTextView.setText(branchName);</span>
+<span class="s2">//            numberOfQueuesTextView.setText(String.valueOf(branchQueueNumber));</span>
+<span class="s2">//</span>
+<span class="s2">//        }</span>
+<span class="s2">//    }</span>
+<span class="s1">}</span>
+
+</pre>
+</body>
+</html>

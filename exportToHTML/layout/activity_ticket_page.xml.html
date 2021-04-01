@@ -1,0 +1,295 @@
+<html>
+<head>
+<title>activity_ticket_page.xml</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #e8bf6a;}
+.s1 { color: #bababa;}
+.s2 { color: #6a8759;}
+.s3 { color: #a9b7c6;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+activity_ticket_page.xml</font>
+</center></td></tr></table>
+<pre><span class="s0">&lt;?</span><span class="s1">xml version</span><span class="s2">=&quot;1.0&quot; </span><span class="s1">encoding</span><span class="s2">=&quot;utf-8&quot;</span><span class="s0">?&gt;</span>
+<span class="s0">&lt;androidx.constraintlayout.widget.ConstraintLayout </span><span class="s1">xmlns:android</span><span class="s2">=&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    <span class="s1">xmlns:app</span><span class="s2">=&quot;http://schemas.android.com/apk/res-auto&quot;</span>
+    <span class="s1">xmlns:tools</span><span class="s2">=&quot;http://schemas.android.com/tools&quot;</span>
+    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+    <span class="s1">android:layout_height</span><span class="s2">=&quot;match_parent&quot;</span>
+    <span class="s1">android:background</span><span class="s2">=&quot;@color/mainBackgroundColor&quot;</span>
+    <span class="s1">tools:context</span><span class="s2">=&quot;.activities.company.TicketPageActivity&quot;</span><span class="s0">&gt;</span>
+
+    <span class="s0">&lt;LinearLayout</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/linearLayout2&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;3dp&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;73dp&quot;</span>
+        <span class="s1">android:background</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+        <span class="s1">android:orientation</span><span class="s2">=&quot;horizontal&quot;</span>
+        <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@+id/log_out_button_list_page&quot;</span>
+        <span class="s1">app:layout_constraintStart_toEndOf</span><span class="s2">=&quot;@+id/textView11&quot;</span>
+        <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@+id/tableRow3&quot;</span><span class="s0">&gt;&lt;/LinearLayout&gt;</span>
+
+    <span class="s0">&lt;ImageView</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/imageView3&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;50dp&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;34dp&quot;</span>
+        <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;80dp&quot;</span>
+        <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;334dp&quot;</span>
+        <span class="s1">android:layout_marginRight</span><span class="s2">=&quot;334dp&quot;</span>
+        <span class="s1">android:layout_marginBottom</span><span class="s2">=&quot;5dp&quot;</span>
+        <span class="s1">app:layout_constraintBottom_toTopOf</span><span class="s2">=&quot;@+id/tableRow&quot;</span>
+        <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:srcCompat</span><span class="s2">=&quot;@drawable/ic_baseline_arrow_back_24&quot; </span><span class="s0">/&gt;</span>
+
+    <span class="s0">&lt;TableRow</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/tableRow&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;430dp&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;10dp&quot;</span>
+        <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;15dp&quot;</span>
+        <span class="s1">android:layout_marginBottom</span><span class="s2">=&quot;10dp&quot;</span>
+        <span class="s1">android:background</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+        <span class="s1">app:layout_constraintBottom_toTopOf</span><span class="s2">=&quot;@+id/textView16&quot;</span>
+        <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@+id/imageView3&quot; </span><span class="s0">/&gt;</span>
+
+    <span class="s0">&lt;ImageView</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/imageView8&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;38dp&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;49dp&quot;</span>
+        <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;16dp&quot;</span>
+        <span class="s1">android:layout_marginLeft</span><span class="s2">=&quot;16dp&quot;</span>
+        <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;3dp&quot;</span>
+        <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;10dp&quot;</span>
+        <span class="s1">android:layout_marginRight</span><span class="s2">=&quot;10dp&quot;</span>
+        <span class="s1">android:layout_marginBottom</span><span class="s2">=&quot;17dp&quot;</span>
+        <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@+id/textView10&quot;</span>
+        <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@+id/tableRow3&quot;</span>
+        <span class="s1">app:srcCompat</span><span class="s2">=&quot;@drawable/list&quot; </span><span class="s0">/&gt;</span>
+
+    <span class="s0">&lt;ImageView</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/imageView9&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;37dp&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;49dp&quot;</span>
+        <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;15dp&quot;</span>
+        <span class="s1">android:layout_marginLeft</span><span class="s2">=&quot;15dp&quot;</span>
+        <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;3dp&quot;</span>
+        <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;10dp&quot;</span>
+        <span class="s1">android:layout_marginRight</span><span class="s2">=&quot;10dp&quot;</span>
+        <span class="s1">android:layout_marginBottom</span><span class="s2">=&quot;12dp&quot;</span>
+        <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@+id/textView11&quot;</span>
+        <span class="s1">app:layout_constraintStart_toEndOf</span><span class="s2">=&quot;@+id/linearLayout&quot;</span>
+        <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@+id/tableRow3&quot;</span>
+        <span class="s1">app:srcCompat</span><span class="s2">=&quot;@drawable/ticket&quot; </span><span class="s0">/&gt;</span>
+
+    <span class="s0">&lt;ImageView</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/log_out_button_list_page&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;37dp&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;48dp&quot;</span>
+        <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;12dp&quot;</span>
+        <span class="s1">android:layout_marginLeft</span><span class="s2">=&quot;12dp&quot;</span>
+        <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;3dp&quot;</span>
+        <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;10dp&quot;</span>
+        <span class="s1">android:layout_marginRight</span><span class="s2">=&quot;10dp&quot;</span>
+        <span class="s1">android:layout_marginBottom</span><span class="s2">=&quot;17dp&quot;</span>
+        <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@+id/logoutbut&quot;</span>
+        <span class="s1">app:layout_constraintStart_toEndOf</span><span class="s2">=&quot;@+id/linearLayout2&quot;</span>
+        <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@+id/tableRow3&quot;</span>
+        <span class="s1">app:srcCompat</span><span class="s2">=&quot;@drawable/out&quot; </span><span class="s0">/&gt;</span>
+
+    <span class="s0">&lt;TextView</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/textView10&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+        <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;12dp&quot;</span>
+        <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;30dp&quot;</span>
+        <span class="s1">android:layout_marginRight</span><span class="s2">=&quot;30dp&quot;</span>
+        <span class="s1">android:layout_marginBottom</span><span class="s2">=&quot;30dp&quot;</span>
+        <span class="s1">android:text</span><span class="s2">=&quot;القائمة&quot;</span>
+        <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+        <span class="s1">android:textSize</span><span class="s2">=&quot;18sp&quot;</span>
+        <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@+id/linearLayout&quot;</span>
+        <span class="s1">app:layout_constraintStart_toEndOf</span><span class="s2">=&quot;@+id/imageView8&quot;</span>
+        <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@+id/tableRow3&quot; </span><span class="s0">/&gt;</span>
+
+    <span class="s0">&lt;TextView</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/textView11&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+        <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;13dp&quot;</span>
+        <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;35dp&quot;</span>
+        <span class="s1">android:layout_marginRight</span><span class="s2">=&quot;35dp&quot;</span>
+        <span class="s1">android:layout_marginBottom</span><span class="s2">=&quot;30dp&quot;</span>
+        <span class="s1">android:text</span><span class="s2">=&quot;التذكرة&quot;</span>
+        <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+        <span class="s1">android:textSize</span><span class="s2">=&quot;18sp&quot;</span>
+        <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@+id/linearLayout2&quot;</span>
+        <span class="s1">app:layout_constraintStart_toEndOf</span><span class="s2">=&quot;@+id/imageView9&quot;</span>
+        <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@+id/tableRow3&quot; </span><span class="s0">/&gt;</span>
+
+    <span class="s0">&lt;TextView</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/logoutbut&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+        <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;10dp&quot;</span>
+        <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;31dp&quot;</span>
+        <span class="s1">android:layout_marginRight</span><span class="s2">=&quot;31dp&quot;</span>
+        <span class="s1">android:layout_marginBottom</span><span class="s2">=&quot;30dp&quot;</span>
+        <span class="s1">android:text</span><span class="s2">=&quot;خروج&quot;</span>
+        <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+        <span class="s1">android:textSize</span><span class="s2">=&quot;18sp&quot;</span>
+        <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintStart_toEndOf</span><span class="s2">=&quot;@+id/log_out_button_list_page&quot;</span>
+        <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@+id/tableRow3&quot; </span><span class="s0">/&gt;</span>
+
+    <span class="s0">&lt;TableRow</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/tableRow3&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;430dp&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;3dp&quot;</span>
+        <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;17dp&quot;</span>
+        <span class="s1">android:background</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+        <span class="s1">app:layout_constraintBottom_toTopOf</span><span class="s2">=&quot;@+id/linearLayout&quot;</span>
+        <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@+id/button3&quot; </span><span class="s0">/&gt;</span>
+
+    <span class="s0">&lt;LinearLayout</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/linearLayout&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;3dp&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;73dp&quot;</span>
+        <span class="s1">android:background</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+        <span class="s1">android:orientation</span><span class="s2">=&quot;horizontal&quot;</span>
+        <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@+id/imageView9&quot;</span>
+        <span class="s1">app:layout_constraintStart_toEndOf</span><span class="s2">=&quot;@+id/textView10&quot;</span>
+        <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@+id/tableRow3&quot;</span><span class="s0">&gt;&lt;/LinearLayout&gt;</span>
+
+    <span class="s0">&lt;TextView</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/textView14&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;196dp&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;42dp&quot;</span>
+        <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;30dp&quot;</span>
+        <span class="s1">android:layout_marginLeft</span><span class="s2">=&quot;30dp&quot;</span>
+        <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;75dp&quot;</span>
+        <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;108dp&quot;</span>
+        <span class="s1">android:layout_marginRight</span><span class="s2">=&quot;108dp&quot;</span>
+        <span class="s1">android:layout_marginBottom</span><span class="s2">=&quot;50dp&quot;</span>
+        <span class="s1">android:gravity</span><span class="s2">=&quot;center&quot;</span>
+        <span class="s1">android:text</span><span class="s2">=&quot;CompName&quot;</span>
+        <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+        <span class="s1">android:textSize</span><span class="s2">=&quot;30sp&quot;</span>
+        <span class="s1">app:layout_constraintBottom_toTopOf</span><span class="s2">=&quot;@+id/tableRow&quot;</span>
+        <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintStart_toEndOf</span><span class="s2">=&quot;@+id/imageView3&quot;</span>
+        <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot; </span><span class="s0">/&gt;</span>
+
+    <span class="s0">&lt;TextView</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/textView15&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+        <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;58dp&quot;</span>
+        <span class="s1">android:layout_marginLeft</span><span class="s2">=&quot;58dp&quot;</span>
+        <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;30dp&quot;</span>
+        <span class="s1">android:layout_marginBottom</span><span class="s2">=&quot;50dp&quot;</span>
+        <span class="s1">android:text</span><span class="s2">=&quot;العملاء في الخدمة&quot;</span>
+        <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+        <span class="s1">android:textSize</span><span class="s2">=&quot;18sp&quot;</span>
+        <span class="s1">app:layout_constraintBottom_toTopOf</span><span class="s2">=&quot;@+id/textView17&quot;</span>
+        <span class="s1">app:layout_constraintEnd_toStartOf</span><span class="s2">=&quot;@+id/textView16&quot;</span>
+        <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@+id/tableRow&quot; </span><span class="s0">/&gt;</span>
+
+    <span class="s0">&lt;TextView</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/textView16&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;120dp&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;105dp&quot;</span>
+        <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;24dp&quot;</span>
+        <span class="s1">android:layout_marginLeft</span><span class="s2">=&quot;24dp&quot;</span>
+        <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;25dp&quot;</span>
+        <span class="s1">android:layout_marginRight</span><span class="s2">=&quot;25dp&quot;</span>
+        <span class="s1">android:background</span><span class="s2">=&quot;@drawable/rounded_butten&quot;</span>
+        <span class="s1">android:gravity</span><span class="s2">=&quot;center&quot;</span>
+        <span class="s1">android:text</span><span class="s2">=&quot;رقم التذكرة حاليا&quot;</span>
+        <span class="s1">android:textColor</span><span class="s2">=&quot;@color/mainBackgroundColor&quot;</span>
+        <span class="s1">android:textSize</span><span class="s2">=&quot;18sp&quot;</span>
+        <span class="s1">app:layout_constraintBottom_toTopOf</span><span class="s2">=&quot;@+id/textView17&quot;</span>
+        <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintStart_toEndOf</span><span class="s2">=&quot;@+id/textView15&quot;</span>
+        <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@+id/tableRow&quot; </span><span class="s0">/&gt;</span>
+
+    <span class="s0">&lt;TextView</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/textView17&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+        <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;124dp&quot;</span>
+        <span class="s1">android:layout_marginLeft</span><span class="s2">=&quot;124dp&quot;</span>
+        <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;20dp&quot;</span>
+        <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;137dp&quot;</span>
+        <span class="s1">android:layout_marginRight</span><span class="s2">=&quot;137dp&quot;</span>
+        <span class="s1">android:text</span><span class="s2">=&quot;رقم تذكرتك&quot;</span>
+        <span class="s1">android:textColor</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+        <span class="s1">android:textSize</span><span class="s2">=&quot;24sp&quot;</span>
+        <span class="s1">app:layout_constraintBottom_toTopOf</span><span class="s2">=&quot;@+id/textView18&quot;</span>
+        <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@+id/textView16&quot; </span><span class="s0">/&gt;</span>
+
+    <span class="s0">&lt;TextView</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/textView18&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;212dp&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;212dp&quot;</span>
+        <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;84dp&quot;</span>
+        <span class="s1">android:layout_marginLeft</span><span class="s2">=&quot;84dp&quot;</span>
+        <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;6dp&quot;</span>
+        <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;83dp&quot;</span>
+        <span class="s1">android:layout_marginRight</span><span class="s2">=&quot;83dp&quot;</span>
+        <span class="s1">android:layout_marginBottom</span><span class="s2">=&quot;5dp&quot;</span>
+        <span class="s1">android:background</span><span class="s2">=&quot;@drawable/full_circle&quot;</span>
+        <span class="s1">android:gravity</span><span class="s2">=&quot;center&quot;</span>
+        <span class="s1">android:text</span><span class="s2">=&quot;رقم التذكرة&quot;</span>
+        <span class="s1">android:textColor</span><span class="s2">=&quot;@color/mainBackgroundColor&quot;</span>
+        <span class="s1">android:textSize</span><span class="s2">=&quot;24sp&quot;</span>
+        <span class="s1">app:layout_constraintBottom_toTopOf</span><span class="s2">=&quot;@+id/button3&quot;</span>
+        <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@+id/textView17&quot; </span><span class="s0">/&gt;</span>
+
+    <span class="s0">&lt;Button</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/button3&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;212dp&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;46dp&quot;</span>
+        <span class="s1">android:layout_marginStart</span><span class="s2">=&quot;84dp&quot;</span>
+        <span class="s1">android:layout_marginLeft</span><span class="s2">=&quot;84dp&quot;</span>
+        <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;5dp&quot;</span>
+        <span class="s1">android:layout_marginEnd</span><span class="s2">=&quot;83dp&quot;</span>
+        <span class="s1">android:layout_marginRight</span><span class="s2">=&quot;83dp&quot;</span>
+        <span class="s1">android:layout_marginBottom</span><span class="s2">=&quot;5dp&quot;</span>
+        <span class="s1">android:background</span><span class="s2">=&quot;@drawable/rounded_butten&quot;</span>
+        <span class="s1">android:text</span><span class="s2">=&quot;الغاء التذكرة&quot;</span>
+        <span class="s1">android:textColor</span><span class="s2">=&quot;@color/mainBackgroundColor&quot;</span>
+        <span class="s1">android:textSize</span><span class="s2">=&quot;18sp&quot;</span>
+        <span class="s1">app:backgroundTint</span><span class="s2">=&quot;#FFFFFF&quot;</span>
+        <span class="s1">app:layout_constraintBottom_toTopOf</span><span class="s2">=&quot;@+id/tableRow3&quot;</span>
+        <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintTop_toBottomOf</span><span class="s2">=&quot;@+id/textView18&quot; </span><span class="s0">/&gt;</span>
+
+
+<span class="s0">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span></pre>
+</body>
+</html>

@@ -1,0 +1,120 @@
+<html>
+<head>
+<title>Branch.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Branch.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.myapplication.objects</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.io.Serializable</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">Branch </span><span class="s0">implements </span><span class="s1">Serializable {</span>
+    <span class="s0">private </span><span class="s1">String branchID</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String branchName</span><span class="s0">;</span>
+    <span class="s0">private double </span><span class="s1">latitude</span><span class="s0">;</span>
+    <span class="s0">private double </span><span class="s1">longitude</span><span class="s0">;</span>
+    <span class="s0">private int </span><span class="s1">numberOfQueues</span><span class="s0">;</span>
+    <span class="s0">private float </span><span class="s1">radius</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String companyID</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">Queue queue1</span><span class="s0">,</span><span class="s1">queue2</span><span class="s0">;</span><span class="s2">///</span>
+
+    <span class="s0">public </span><span class="s1">Branch(){</span>
+
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">Branch(String branchID</span><span class="s0">, </span><span class="s1">String branchName</span><span class="s0">, double </span><span class="s1">latitude</span><span class="s0">, double </span><span class="s1">longitude</span><span class="s0">, float </span><span class="s1">radius</span><span class="s0">, int </span><span class="s1">numberOfQueues</span><span class="s0">, </span><span class="s1">String companyID</span><span class="s0">, </span><span class="s1">Queue queue1</span><span class="s0">, </span><span class="s1">Queue queue2) {</span>
+        <span class="s0">this</span><span class="s1">.branchID = branchID</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.branchName = branchName</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.latitude = latitude</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.longitude = longitude</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.numberOfQueues = numberOfQueues</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.companyID =companyID</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.radius = radius</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.queue1 = queue1</span><span class="s0">;</span>
+        <span class="s0">this</span><span class="s1">.queue2 = queue2</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getCompanyID() {</span>
+        <span class="s0">return </span><span class="s1">companyID</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setCompanyID(String companyID) {</span>
+        <span class="s0">this</span><span class="s1">.companyID = companyID</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setBranchID(String branchID) {</span>
+        <span class="s0">this</span><span class="s1">.branchID = branchID</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setBranchName(String branchName) {</span>
+        <span class="s0">this</span><span class="s1">.branchName = branchName</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setLatitude(</span><span class="s0">double </span><span class="s1">latitude) {</span>
+        <span class="s0">this</span><span class="s1">.latitude = latitude</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s0">public void </span><span class="s1">setLongitude(</span><span class="s0">double </span><span class="s1">longitude) {</span>
+        <span class="s0">this</span><span class="s1">.longitude = longitude</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setNumberOfQueues(</span><span class="s0">int </span><span class="s1">numberOfQueues) {</span>
+        <span class="s0">this</span><span class="s1">.numberOfQueues = numberOfQueues</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getBranchID() {</span>
+        <span class="s0">return </span><span class="s1">branchID</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getBranchName() {</span>
+        <span class="s0">return </span><span class="s1">branchName</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public double </span><span class="s1">getLatitude() {</span>
+        <span class="s0">return </span><span class="s1">latitude</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public double </span><span class="s1">getLongitude() {</span>
+        <span class="s0">return </span><span class="s1">longitude</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public int </span><span class="s1">getNumberOfQueues() {</span>
+        <span class="s0">return </span><span class="s1">numberOfQueues</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public float </span><span class="s1">getRadius() {</span>
+        <span class="s0">return </span><span class="s1">radius</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setRadius(</span><span class="s0">float </span><span class="s1">radius) {</span>
+        <span class="s0">this</span><span class="s1">.radius = radius</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">Queue getQueue1() {</span>
+        <span class="s0">return </span><span class="s1">queue1</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setQueue1(Queue queue1) {</span>
+        <span class="s0">this</span><span class="s1">.queue1 = queue1</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">Queue getQueue2() {</span>
+        <span class="s0">return </span><span class="s1">queue2</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setQueue2(Queue queue2) {</span>
+        <span class="s0">this</span><span class="s1">.queue2 = queue2</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

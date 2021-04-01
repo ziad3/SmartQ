@@ -1,0 +1,126 @@
+<html>
+<head>
+<title>LoginPageActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+LoginPageActivity.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.myapplication.activities</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">android.app.ProgressDialog</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Button</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.TextView</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Toast</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">androidx.appcompat.app.AppCompatActivity</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.example.myapplication.R</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.myapplication.UserMethods</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.material.textfield.TextInputEditText</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.auth.FirebaseAuth</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.database.FirebaseDatabase</span><span class="s0">;</span>
+
+
+<span class="s0">public class </span><span class="s1">LoginPageActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity {</span>
+
+
+
+
+    <span class="s0">private </span><span class="s1">TextInputEditText Email</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">TextInputEditText passwordEditText</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">Button LoginBut</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">TextView userReg</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">FirebaseAuth fAuth = FirebaseAuth.getInstance()</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">ProgressDialog progressDialog</span><span class="s0">;</span>
+    <span class="s1">FirebaseDatabase firebaseDatabase</span><span class="s0">;</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) {</span>
+        <span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span>
+        <span class="s1">setContentView(R.layout.activity_login)</span><span class="s0">;</span>
+        <span class="s1">setupUIViews()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onStart() {</span>
+        <span class="s0">super</span><span class="s1">.onStart()</span><span class="s0">;</span>
+        <span class="s0">if</span><span class="s1">(fAuth.getCurrentUser() != </span><span class="s0">null</span><span class="s1">){</span>
+<span class="s2">//            progDialog.setMessage(getString(R.string.just_a_moment));</span>
+<span class="s2">//            progDialog.show();</span>
+            <span class="s1">UserMethods.determineUserTypeAndMoveToCorrectPage(</span><span class="s0">this</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onPause() {</span>
+        <span class="s0">super</span><span class="s1">.onPause()</span><span class="s0">;</span>
+        <span class="s0">if</span><span class="s1">(progressDialog != </span><span class="s0">null</span><span class="s1">)</span>
+            <span class="s1">progressDialog.dismiss()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">ResetPass(View view){</span>
+        <span class="s1">TextView move = findViewById(R.id.reset_password_text_view)</span><span class="s0">;</span>
+        <span class="s1">Intent intent = </span><span class="s0">new </span><span class="s1">Intent(</span><span class="s0">this,</span><span class="s1">ResetPassword.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">startActivity(intent)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s2">//    public void Admins(View view){</span>
+<span class="s2">//        TextView move = findViewById(R.id.Admins);</span>
+<span class="s2">//        Intent intent = new Intent(this,LoginPanel.class);</span>
+<span class="s2">//        startActivity(intent);</span>
+<span class="s2">//    }</span>
+    <span class="s0">private void </span><span class="s1">validate(String e</span><span class="s0">, </span><span class="s1">String p) {</span>
+        <span class="s1">progressDialog.setMessage(getString(R.string.just_moment))</span><span class="s0">;</span>
+        <span class="s1">progressDialog.show()</span><span class="s0">;</span>
+
+        <span class="s1">fAuth.signInWithEmailAndPassword(e</span><span class="s0">, </span><span class="s1">p)</span>
+                <span class="s1">.addOnSuccessListener(t-&gt;{</span>
+                    <span class="s1">checkEmailVerification()</span><span class="s0">;</span>
+                    <span class="s1">UserMethods.determineUserTypeAndMoveToCorrectPage(</span><span class="s0">this</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">})</span>
+                <span class="s1">.addOnFailureListener(t -&gt; {</span>
+                    <span class="s1">Toast.makeText(getApplicationContext()</span><span class="s0">, </span><span class="s1">t.getMessage()</span><span class="s0">, </span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span>
+                    <span class="s1">progressDialog.dismiss()</span><span class="s0">;</span>
+                <span class="s1">})</span><span class="s0">;</span>
+
+    <span class="s1">}</span>
+    <span class="s0">private void </span><span class="s1">checkEmailVerification(){</span>
+
+        <span class="s0">if</span><span class="s1">(!fAuth.getCurrentUser().isEmailVerified())</span>
+            <span class="s1">Toast.makeText(getApplicationContext()</span><span class="s0">, </span><span class="s1">getString(R.string.email_not_verified)</span><span class="s0">,</span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span>
+
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">setupUIViews() {</span>
+        <span class="s1">getSupportActionBar().hide()</span><span class="s0">;</span>
+        <span class="s1">firebaseDatabase = FirebaseDatabase.getInstance()</span><span class="s0">;</span>
+        <span class="s1">Email = findViewById(R.id.username_sign_in_customer_editText)</span><span class="s0">;</span>
+        <span class="s1">passwordEditText = findViewById(R.id.password_sign_in_customer_editText)</span><span class="s0">;</span>
+        <span class="s1">LoginBut = findViewById(R.id.login_button)</span><span class="s0">;</span>
+        <span class="s1">userReg = findViewById(R.id.sign_in)</span><span class="s0">;</span>
+        <span class="s1">userReg.setOnClickListener(view -&gt; startActivity(</span><span class="s0">new </span><span class="s1">Intent(LoginPageActivity.</span><span class="s0">this, </span><span class="s1">RegisterCustomerActivity.</span><span class="s0">class</span><span class="s1">)))</span><span class="s0">;</span>
+        <span class="s1">progressDialog = </span><span class="s0">new </span><span class="s1">ProgressDialog(</span><span class="s0">this</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">LoginBut.setOnClickListener(view -&gt; {</span>
+            <span class="s0">if</span><span class="s1">(Email.getText().toString().isEmpty() || passwordEditText.getText().toString().isEmpty())</span>
+                <span class="s1">Toast.makeText(getApplicationContext()</span><span class="s0">,</span><span class="s1">getText(R.string.pleaseFillAllFields)</span><span class="s0">,</span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span>
+            <span class="s0">else</span>
+                <span class="s1">validate(Email.getText().toString()</span><span class="s0">, </span><span class="s1">passwordEditText.getText().toString())</span><span class="s0">;</span>
+        <span class="s1">})</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+
+</pre>
+</body>
+</html>

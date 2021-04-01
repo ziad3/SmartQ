@@ -1,0 +1,142 @@
+<html>
+<head>
+<title>RegisterCustomerActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #808080;}
+.s3 { color: #6a8759;}
+.s4 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+RegisterCustomerActivity.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.myapplication.activities</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Button</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.EditText</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Toast</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">androidx.annotation.NonNull</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.appcompat.app.AppCompatActivity</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.example.myapplication.R</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.myapplication.objects.Customer</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.tasks.OnCompleteListener</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.tasks.Task</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.auth.FirebaseAuth</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.auth.FirebaseUser</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.database.DatabaseReference</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.database.FirebaseDatabase</span><span class="s0">;</span>
+
+<span class="s0">import static </span><span class="s1">com.example.myapplication.activities.MainLoadingPage.CUSTOMER</span><span class="s0">;</span>
+<span class="s0">import static </span><span class="s1">com.example.myapplication.activities.MainLoadingPage.USER_TYPE</span><span class="s0">;</span>
+<span class="s2">//import static com.example.myapplication.activities.MainLoadingPage.Panel;</span>
+
+
+<span class="s0">public class </span><span class="s1">RegisterCustomerActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity {</span>
+    <span class="s0">private </span><span class="s1">EditText userName</span><span class="s0">, </span><span class="s1">Pass</span><span class="s0">, </span><span class="s1">Email</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">Button ButtonRegister</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">FirebaseAuth firebaseAuth</span><span class="s0">;</span>
+    <span class="s1">String email</span><span class="s0">, </span><span class="s1">name</span><span class="s0">, </span><span class="s1">password</span><span class="s0">;</span>
+
+
+
+
+    <span class="s1">FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance()</span><span class="s0">;</span>
+    <span class="s1">DatabaseReference customerRef = firebaseDatabase.getReference(CUSTOMER)</span><span class="s0">;</span>
+    <span class="s1">DatabaseReference userTypeCustomer = firebaseDatabase.getReference(USER_TYPE).child(CUSTOMER)</span><span class="s0">;</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) {</span>
+        <span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span>
+        <span class="s1">setContentView(R.layout.activity_register_customer)</span><span class="s0">;</span>
+        <span class="s1">setupUIViews()</span><span class="s0">;</span>
+        <span class="s1">getSupportActionBar().hide()</span><span class="s0">;</span>
+
+        <span class="s1">findViewById(R.id.back_to_login_page_arrow).setOnClickListener(t -&gt; finish())</span><span class="s0">;</span>
+        <span class="s1">findViewById(R.id.go_to_company_sign_in_button).setOnClickListener(t -&gt; startActivity(</span><span class="s0">new </span><span class="s1">Intent(getApplicationContext()</span><span class="s0">, </span><span class="s1">RegisterCompanyActivity.</span><span class="s0">class</span><span class="s1">)))</span><span class="s0">;</span>
+        <span class="s1">firebaseAuth = FirebaseAuth.getInstance()</span><span class="s0">;</span>
+
+        <span class="s1">ButtonRegister.setOnClickListener(view -&gt; {</span>
+            <span class="s1">name = userName.getText().toString()</span><span class="s0">;</span>
+            <span class="s1">password = Pass.getText().toString()</span><span class="s0">;</span>
+            <span class="s1">email = Email.getText().toString()</span><span class="s0">;</span>
+            <span class="s0">if </span><span class="s1">(validate()) {</span>
+                <span class="s2">//Upload data to the database</span>
+<span class="s2">//                    String uemail = Email.getText().toString().trim();</span>
+<span class="s2">//                    String upass = Pass.getText().toString().trim();</span>
+                <span class="s1">firebaseAuth.createUserWithEmailAndPassword(email</span><span class="s0">, </span><span class="s1">password)</span>
+                        <span class="s1">.addOnSuccessListener(task -&gt; sendEmailVerification())</span>
+                        <span class="s1">.addOnFailureListener(task -&gt; Toast.makeText(getApplicationContext()</span><span class="s0">,</span><span class="s1">task.getMessage()</span><span class="s0">,</span><span class="s1">Toast.LENGTH_LONG).show())</span><span class="s0">;</span>
+            <span class="s1">}})</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+<span class="s2">//    public void BackTOThePge (View view){</span>
+<span class="s2">//        ImageView back;</span>
+<span class="s2">//        back = findViewById(R.id.BackToMain);</span>
+<span class="s2">//        Intent intent = new Intent(this, MainPageActivity.class);</span>
+<span class="s2">//        startActivity(intent);</span>
+<span class="s2">//    }</span>
+
+
+    <span class="s0">private void </span><span class="s1">setupUIViews(){</span>
+        <span class="s1">userName = findViewById(R.id.username_sign_in_customer_editText)</span><span class="s0">;</span>
+        <span class="s1">Pass = findViewById(R.id.password_sign_in_customer_editText)</span><span class="s0">;</span>
+        <span class="s1">Email = findViewById(R.id.email_sign_in_customer_editText)</span><span class="s0">;</span>
+        <span class="s1">ButtonRegister = findViewById(R.id.login_button)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s0">private </span><span class="s1">Boolean validate(){</span>
+        <span class="s1">Boolean result = </span><span class="s0">false;</span>
+
+
+
+
+        <span class="s0">if </span><span class="s1">(name.isEmpty() || password.isEmpty() || email.isEmpty()) {</span>
+            <span class="s1">Toast.makeText(</span><span class="s0">this, </span><span class="s3">&quot;Please enter all the details&quot;</span><span class="s0">, </span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+            <span class="s1">result = </span><span class="s0">true;</span>
+        <span class="s1">}</span>
+
+        <span class="s0">return </span><span class="s1">result</span><span class="s0">;</span>
+    <span class="s1">}</span>
+    <span class="s0">private void </span><span class="s1">sendEmailVerification(){</span>
+        <span class="s1">FirebaseUser firebaseUser = firebaseAuth.getCurrentUser()</span><span class="s0">;</span>
+        <span class="s0">if</span><span class="s1">(firebaseUser!=</span><span class="s0">null</span><span class="s1">){</span>
+            <span class="s1">firebaseUser.sendEmailVerification().addOnCompleteListener(</span><span class="s0">new </span><span class="s1">OnCompleteListener&lt;Void&gt;() {</span>
+                <span class="s1">@Override</span>
+                <span class="s0">public void </span><span class="s1">onComplete(@NonNull Task&lt;Void&gt; task) {</span>
+                    <span class="s0">if</span><span class="s1">(task.isSuccessful()){</span>
+                        <span class="s1">sendUserData()</span><span class="s0">;</span>
+                        <span class="s1">Toast.makeText(RegisterCustomerActivity.</span><span class="s0">this, </span><span class="s3">&quot;Successfully Registered, Verification mail sent!&quot;</span><span class="s0">, </span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span>
+                        <span class="s1">firebaseAuth.signOut()</span><span class="s0">;</span>
+                        <span class="s1">finish()</span><span class="s0">;</span>
+                        <span class="s2">//startActivity(new Intent(RegisterCostumerActivity.this, CostumerLoginActivity.class));</span>
+                    <span class="s1">}</span><span class="s0">else</span><span class="s1">{</span>
+                        <span class="s1">Toast.makeText(RegisterCustomerActivity.</span><span class="s0">this, </span><span class="s3">&quot;Verification mail has'nt been sent!&quot;</span><span class="s0">, </span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span>
+                    <span class="s1">}</span>
+                <span class="s1">}</span>
+            <span class="s1">})</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">sendUserData(){</span>
+        <span class="s1">String currentUserId = firebaseAuth.getUid()</span><span class="s0">;</span>
+        <span class="s1">Customer customer = </span><span class="s0">new </span><span class="s1">Customer(currentUserId</span><span class="s0">,</span><span class="s1">name</span><span class="s0">, </span><span class="s1">email</span><span class="s0">, </span><span class="s4">40</span><span class="s1">)</span><span class="s0">;</span>
+
+        <span class="s1">customerRef.push().setValue(customer)</span><span class="s0">;</span>
+<span class="s2">//        userTypeCustomer.child(currentUserId).setValue(currentUserId);</span>
+    <span class="s1">}</span>
+<span class="s1">}</span>
+
+</pre>
+</body>
+</html>

@@ -1,0 +1,84 @@
+<html>
+<head>
+<title>GeofenceBroadcastReceiver.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+GeofenceBroadcastReceiver.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.myapplication.activities</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">android.content.BroadcastReceiver</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.Context</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.util.Log</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Toast</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.example.myapplication.activities.customer.CustomerInterfaceActivity</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.myapplication.activities.customer.ui.home.MapsFragment</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.location.Geofence</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.location.GeofencingEvent</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">GeofenceBroadcastReceiver </span><span class="s0">extends </span><span class="s1">BroadcastReceiver {</span>
+
+    <span class="s0">private static final </span><span class="s1">String TAG = </span><span class="s2">&quot;GeofenceBroadcastReceiv&quot;</span><span class="s0">;</span>
+
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">onReceive(Context context</span><span class="s0">, </span><span class="s1">Intent intent) {</span>
+        <span class="s3">// TODO: This method is called when the BroadcastReceiver is receiving</span>
+        <span class="s3">// an Intent broadcast.</span>
+       <span class="s3">// Toast.makeText(context, &quot;Geofence triggered...&quot;, Toast.LENGTH_SHORT).show();</span>
+        <span class="s1">Intent intent1</span><span class="s0">;</span>
+        <span class="s1">NotificationHelper notificationHelper = </span><span class="s0">new </span><span class="s1">NotificationHelper(context)</span><span class="s0">;</span>
+
+        <span class="s1">GeofencingEvent geofencingEvent = GeofencingEvent.fromIntent(intent)</span><span class="s0">;</span>
+
+        <span class="s0">if </span><span class="s1">(geofencingEvent.hasError()) {</span>
+            <span class="s1">Log.d(TAG</span><span class="s0">, </span><span class="s2">&quot;onReceive: Error receiving geofence event...&quot;</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s0">return;</span>
+        <span class="s1">}</span>
+
+        <span class="s1">List&lt;Geofence&gt; geofenceList = geofencingEvent.getTriggeringGeofences()</span><span class="s0">;</span>
+        <span class="s0">for </span><span class="s1">(Geofence geofence: geofenceList) {</span>
+            <span class="s1">Log.d(TAG</span><span class="s0">, </span><span class="s2">&quot;onReceive: &quot; </span><span class="s1">+ geofence.getRequestId())</span><span class="s0">;</span>
+        <span class="s1">}</span>
+<span class="s3">//        Location location = geofencingEvent.getTriggeringLocation();</span>
+        <span class="s0">int </span><span class="s1">transitionType = geofencingEvent.getGeofenceTransition()</span><span class="s0">;</span>
+
+        <span class="s0">switch </span><span class="s1">(transitionType) {</span>
+            <span class="s0">case </span><span class="s1">Geofence.GEOFENCE_TRANSITION_ENTER:</span>
+           <span class="s3">//     Toast.makeText(context, &quot;GEOFENCE_TRANSITION_ENTER&quot;, Toast.LENGTH_SHORT).show();</span>
+                <span class="s1">notificationHelper.sendHighPriorityNotification(</span><span class="s2">&quot;GEOFENCE_TRANSITION_ENTER&quot;</span><span class="s0">, </span><span class="s2">&quot;&quot;</span><span class="s0">, </span><span class="s1">CustomerInterfaceActivity.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">Intent i = </span><span class="s0">new </span><span class="s1">Intent(context</span><span class="s0">, </span><span class="s1">Dialog.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)</span><span class="s0">;</span>
+                <span class="s1">context.startActivity(i)</span><span class="s0">;</span>
+             <span class="s3">//    intent1 =new Intent(context,MapsFragment.class);</span>
+               <span class="s3">// intent1.putExtra(&quot;name&quot;,x);</span>
+                <span class="s0">break;</span>
+            <span class="s0">case </span><span class="s1">Geofence.GEOFENCE_TRANSITION_DWELL:</span>
+              <span class="s3">//  Toast.makeText(context, &quot;GEOFENCE_TRANSITION_DWELL&quot;, Toast.LENGTH_SHORT).show();</span>
+                <span class="s1">notificationHelper.sendHighPriorityNotification(</span><span class="s2">&quot;GEOFENCE_TRANSITION_DWELL&quot;</span><span class="s0">, </span><span class="s2">&quot;&quot;</span><span class="s0">, </span><span class="s1">CustomerInterfaceActivity.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s0">break;</span>
+            <span class="s0">case </span><span class="s1">Geofence.GEOFENCE_TRANSITION_EXIT:</span>
+                <span class="s1">Toast.makeText(context</span><span class="s0">, </span><span class="s2">&quot;You need to enter the area&quot;</span><span class="s0">, </span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span>
+                <span class="s1">notificationHelper.sendHighPriorityNotification(</span><span class="s2">&quot;GEOFENCE_TRANSITION_EXIT&quot;</span><span class="s0">, </span><span class="s2">&quot;&quot;</span><span class="s0">, </span><span class="s1">CustomerInterfaceActivity.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s0">break;</span>
+        <span class="s1">}</span>
+
+    <span class="s1">}</span>
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

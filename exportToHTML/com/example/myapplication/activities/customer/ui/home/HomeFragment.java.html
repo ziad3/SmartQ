@@ -1,0 +1,267 @@
+<html>
+<head>
+<title>HomeFragment.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #808080;}
+.s3 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+HomeFragment.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.myapplication.activities.customer.ui.home</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">android.app.SearchManager</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.Context</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.os.Build</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.util.Log</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.LayoutInflater</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.Menu</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.MenuInflater</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.MenuItem</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.ViewGroup</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.RelativeLayout</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.TextView</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">androidx.annotation.NonNull</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.annotation.Nullable</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.annotation.RequiresApi</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.appcompat.widget.SearchView</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.fragment.app.Fragment</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.lifecycle.ViewModelProvider</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.recyclerview.widget.LinearLayoutManager</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.recyclerview.widget.RecyclerView</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.example.myapplication.R</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.myapplication.objects.Branch</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.firebase.ui.database.FirebaseRecyclerAdapter</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.firebase.ui.database.FirebaseRecyclerOptions</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.database.DatabaseReference</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.database.FirebaseDatabase</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.database.Query</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span>
+
+<span class="s0">import static </span><span class="s1">com.example.myapplication.activities.MainLoadingPage.BRANCH</span><span class="s0">;</span>
+<span class="s0">import static </span><span class="s1">com.example.myapplication.activities.MainLoadingPage.BRANCH_CLASS</span><span class="s0">;</span>
+<span class="s0">import static </span><span class="s1">com.example.myapplication.activities.MainLoadingPage.BRANCH_NAME</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">HomeFragment </span><span class="s0">extends </span><span class="s1">Fragment </span><span class="s0">implements </span><span class="s1">SearchView.OnQueryTextListener {</span>
+
+    <span class="s2">/*private GoogleMap mMap; 
+    PendingIntent pendingIntent; 
+    private int FINE_LOCATION_ACCESS_REQUEST_CODE = 10001;*/</span>
+
+
+<span class="s2">//    FirebaseRecyclerAdapter&lt;Branch, HomeViewModel.CustomerBranchHolder&gt; firebaseRecyclerAdapter;</span>
+
+<span class="s2">//    RecyclerView recyclerView;</span>
+    <span class="s0">private </span><span class="s1">HomeViewModel homeViewModel</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">FirebaseRecyclerAdapter&lt;Branch</span><span class="s0">, </span><span class="s1">CustomerBranchHolder&gt; firebaseRecyclerAdapter</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">View root</span><span class="s0">;</span>
+    <span class="s1">RelativeLayout progressBar</span><span class="s0">;</span>
+    <span class="s1">RecyclerView recyclerView</span><span class="s0">;</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">onStop() {</span>
+        <span class="s0">super</span><span class="s1">.onStop()</span><span class="s0">;</span>
+        <span class="s0">if</span><span class="s1">(firebaseRecyclerAdapter != </span><span class="s0">null</span><span class="s1">)</span>
+            <span class="s1">firebaseRecyclerAdapter.stopListening()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">onStart() {</span>
+        <span class="s0">super</span><span class="s1">.onStart()</span><span class="s0">;</span>
+        <span class="s0">if</span><span class="s1">(firebaseRecyclerAdapter != </span><span class="s0">null</span><span class="s1">)</span>
+            <span class="s1">firebaseRecyclerAdapter.startListening()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">onCreate(@Nullable Bundle savedInstanceState) {</span>
+        <span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span>
+        <span class="s1">setHasOptionsMenu(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">View onCreateView(@NonNull LayoutInflater inflater</span><span class="s0">,</span>
+                             <span class="s1">ViewGroup container</span><span class="s0">, </span><span class="s1">Bundle savedInstanceState) {</span>
+        <span class="s1">homeViewModel =</span>
+                <span class="s0">new </span><span class="s1">ViewModelProvider(</span><span class="s0">this</span><span class="s1">).get(HomeViewModel.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+         <span class="s1">root = inflater.inflate(R.layout.fragment_home</span><span class="s0">, </span><span class="s1">container</span><span class="s0">, false</span><span class="s1">)</span><span class="s0">;</span>
+<span class="s2">//        homeViewModel.setBranchRecyclerView(root,getParentFragmentManager());</span>
+        <span class="s1">setBranchRecyclerView(</span><span class="s0">null</span><span class="s1">)</span><span class="s0">;</span>
+
+        <span class="s0">return </span><span class="s1">root</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">void </span><span class="s1">setBranchRecyclerView(String search){</span>
+        <span class="s1">progressBar = root.findViewById(R.id.progress_bar_branches_customer)</span><span class="s0">;</span>
+        <span class="s1">recyclerView = root.findViewById(R.id.branches_list_customer_recycler_view)</span><span class="s0">;</span>
+        <span class="s1">recyclerView.setLayoutManager(</span><span class="s0">new </span><span class="s1">LinearLayoutManager(root.getContext()))</span><span class="s0">;</span>
+        <span class="s1">progressBar.setVisibility(View.VISIBLE)</span><span class="s0">;</span>
+
+        <span class="s1">DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference()</span><span class="s0">;</span>
+        <span class="s1">Query query</span><span class="s0">;</span>
+        <span class="s0">if </span><span class="s1">(search == </span><span class="s0">null</span><span class="s1">)</span>
+             <span class="s1">query = rootRef.child(BRANCH)</span><span class="s0">;</span>
+        <span class="s0">else</span>
+            <span class="s1">query = rootRef.child(BRANCH).orderByChild(BRANCH_NAME).startAt(search)</span><span class="s0">;</span>
+
+        <span class="s1">FirebaseRecyclerOptions&lt;Branch&gt; firebaseRecyclerOptions = </span><span class="s0">new </span><span class="s1">FirebaseRecyclerOptions.Builder&lt;Branch&gt;()</span>
+                <span class="s1">.setQuery(query</span><span class="s0">, </span><span class="s1">Branch.</span><span class="s0">class</span><span class="s1">)</span>
+                <span class="s1">.build()</span><span class="s0">;</span>
+        <span class="s1">firebaseRecyclerAdapter = </span><span class="s0">new </span><span class="s1">FirebaseRecyclerAdapter&lt;Branch</span><span class="s0">, </span><span class="s1">CustomerBranchHolder&gt;(firebaseRecyclerOptions) {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">protected void </span><span class="s1">onBindViewHolder(@NonNull CustomerBranchHolder customerBranchHolder</span><span class="s0">, int </span><span class="s1">position</span><span class="s0">, </span><span class="s1">@NonNull Branch branch) {</span>
+                <span class="s1">CustomerBranchHolder.setBranch(branch)</span><span class="s0">;</span>
+
+                <span class="s1">progressBar.setVisibility(View.GONE)</span><span class="s0">;</span>
+                <span class="s1">customerBranchHolder.itemView.setOnClickListener(t -&gt;</span>
+                <span class="s1">{</span>
+                    <span class="s1">MapsFragment mapsFragment = </span><span class="s0">new </span><span class="s1">MapsFragment()</span><span class="s0">;</span>
+                    <span class="s1">Bundle bundle = </span><span class="s0">new </span><span class="s1">Bundle()</span><span class="s0">;</span>
+                    <span class="s1">bundle.putSerializable(BRANCH_CLASS</span><span class="s0">,</span><span class="s1">getItem(position))</span><span class="s0">;</span>
+                    <span class="s1">mapsFragment.setArguments(bundle)</span><span class="s0">;</span>
+                    <span class="s1">getParentFragmentManager().beginTransaction()</span>
+<span class="s2">//                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)</span>
+                            <span class="s1">.addToBackStack(</span><span class="s0">null</span><span class="s1">)</span>
+<span class="s2">//                            .hide(homeFragment)</span>
+                            <span class="s1">.replace(R.id.nav_host_fragment</span><span class="s0">, </span><span class="s1">mapsFragment)</span>
+                            <span class="s1">.commit()</span><span class="s0">;</span>
+<span class="s2">//                    Intent i = new Intent(getActivity(), MapsActivity.class);</span>
+<span class="s2">//                    i.putExtra(BRANCH_CLASS,getItem(position));</span>
+<span class="s2">//                    startActivity(i);</span>
+<span class="s2">//                    ((Activity) getActivity()).overridePendingTransition(0, 0);</span>
+
+                <span class="s1">})</span><span class="s0">;</span>
+            <span class="s1">}</span>
+
+
+            <span class="s1">@NonNull</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public </span><span class="s1">CustomerBranchHolder onCreateViewHolder(@NonNull ViewGroup parent</span><span class="s0">, int </span><span class="s1">viewType) {</span>
+                <span class="s1">View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_branch_item_customer</span><span class="s0">, </span><span class="s1">parent</span><span class="s0">, false</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s0">return new </span><span class="s1">CustomerBranchHolder(view)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+
+            <span class="s1">@NonNull</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public </span><span class="s1">Branch getItem(</span><span class="s0">int </span><span class="s1">position) {</span>
+                <span class="s0">return super</span><span class="s1">.getItem(position)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+
+            <span class="s1">@NonNull</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public </span><span class="s1">DatabaseReference getRef(</span><span class="s0">int </span><span class="s1">position) {</span>
+                <span class="s0">return super</span><span class="s1">.getRef(position)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onDataChanged() {</span>
+                <span class="s0">super</span><span class="s1">.onDataChanged()</span><span class="s0">;</span>
+                <span class="s0">if</span><span class="s1">(getItemCount() == </span><span class="s3">0</span><span class="s1">)</span>
+                    <span class="s1">progressBar.setVisibility(View.GONE)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+
+
+        <span class="s1">}</span><span class="s0">;</span>
+        <span class="s1">firebaseRecyclerAdapter.startListening()</span><span class="s0">;</span>
+        <span class="s1">recyclerView.setAdapter(firebaseRecyclerAdapter)</span><span class="s0">;</span>
+
+
+    <span class="s1">}</span>
+
+
+
+
+    <span class="s0">public static class </span><span class="s1">CustomerBranchHolder </span><span class="s0">extends </span><span class="s1">RecyclerView.ViewHolder{</span>
+        <span class="s0">private static </span><span class="s1">TextView branchID</span><span class="s0">, </span><span class="s1">branchNameTextView</span><span class="s0">,</span><span class="s1">location</span><span class="s0">,</span><span class="s1">companyID</span><span class="s0">, </span><span class="s1">numberOfQueuesTextView</span><span class="s0">;</span>
+
+        <span class="s0">public </span><span class="s1">CustomerBranchHolder(View itemView) {</span>
+            <span class="s0">super</span><span class="s1">(itemView)</span><span class="s0">;</span>
+            <span class="s1">branchNameTextView = itemView.findViewById(R.id.item_branch_name_customer)</span><span class="s0">;</span>
+            <span class="s1">numberOfQueuesTextView = itemView.findViewById(R.id.short_description)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+        <span class="s0">public static void </span><span class="s1">setBranch(Branch branch) {</span>
+            <span class="s1">String branchName = branch.getBranchName()</span><span class="s0">;</span>
+            <span class="s0">int </span><span class="s1">branchQueueNumber = branch.getNumberOfQueues()</span><span class="s0">;</span>
+            <span class="s1">branchNameTextView.setText(branchName)</span><span class="s0">;</span>
+            <span class="s1">numberOfQueuesTextView.setText(String.valueOf(branchQueueNumber))</span><span class="s0">;</span>
+
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">onCreateOptionsMenu(@NonNull Menu menu</span><span class="s0">, </span><span class="s1">@NonNull MenuInflater inflater) {</span>
+        <span class="s0">super</span><span class="s1">.onCreateOptionsMenu(menu</span><span class="s0">, </span><span class="s1">inflater)</span><span class="s0">;</span>
+        <span class="s1">inflater.inflate(R.menu.top_home_menu</span><span class="s0">, </span><span class="s1">menu)</span><span class="s0">;</span>
+
+        <span class="s0">final </span><span class="s1">MenuItem searchItem = menu.findItem(R.id.home_search)</span><span class="s0">;</span>
+        <span class="s0">final </span><span class="s1">SearchView searchView = (SearchView) searchItem.getActionView()</span><span class="s0">;</span>
+<span class="s2">//        SearchManager searchManager =</span>
+<span class="s2">//                (SearchManager) getActivity().getSystemService(Context.SEARCH_SERVICE);</span>
+<span class="s2">//        searchView.setSearchableInfo(</span>
+<span class="s2">//                searchManager.getSearchableInfo(getActivity().getComponentName()));</span>
+
+        <span class="s1">searchView.setOnQueryTextListener(</span><span class="s0">this</span><span class="s1">)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public boolean </span><span class="s1">onQueryTextSubmit(String query) {</span>
+        <span class="s0">return false;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public boolean </span><span class="s1">onQueryTextChange(String newText) {</span>
+        <span class="s1">setBranchRecyclerView(newText)</span><span class="s0">;</span>
+        <span class="s0">return true;</span>
+    <span class="s1">}</span>
+
+
+    <span class="s2">/*public PendingIntent getPendingIntent() { 
+        if (pendingIntent != null) { 
+            return pendingIntent; 
+        } 
+        Intent intent = new Intent(getActivity(), GeofenceBroadcastReceiver.class); 
+        pendingIntent = PendingIntent.getBroadcast(getActivity(), 2607, intent, PendingIntent.FLAG_UPDATE_CURRENT); 
+ 
+        return pendingIntent; 
+    } 
+ 
+ 
+ 
+    private void enableUserLocation() { 
+        if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) { 
+            mMap.setMyLocationEnabled(true); 
+        } else { 
+            //Ask for permission 
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION)) { 
+                //We need to show user a dialog for displaying why the permission is needed and then ask for the permission... 
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, FINE_LOCATION_ACCESS_REQUEST_CODE); 
+            } else { 
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, FINE_LOCATION_ACCESS_REQUEST_CODE); 
+            } 
+        } 
+    }*/</span>
+
+
+<span class="s1">}</span>
+
+
+
+
+
+
+</pre>
+</body>
+</html>

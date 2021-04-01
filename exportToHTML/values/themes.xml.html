@@ -1,0 +1,57 @@
+<html>
+<head>
+<title>themes.xml</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #e8bf6a;}
+.s1 { color: #bababa;}
+.s2 { color: #6a8759;}
+.s3 { color: #a9b7c6;}
+.s4 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+themes.xml</font>
+</center></td></tr></table>
+<pre><span class="s0">&lt;resources </span><span class="s1">xmlns:tools</span><span class="s2">=&quot;http://schemas.android.com/tools&quot;</span><span class="s0">&gt;</span>
+    <span class="s4">&lt;!-- Base application theme. --&gt;</span>
+    <span class="s0">&lt;style </span><span class="s1">name</span><span class="s2">=&quot;Theme.MyApplication&quot; </span><span class="s1">parent</span><span class="s2">=&quot;Theme.MaterialComponents.DayNight.DarkActionBar&quot;</span><span class="s0">&gt;</span>
+        <span class="s4">&lt;!-- Primary brand color. --&gt;</span>
+        <span class="s0">&lt;item </span><span class="s1">name</span><span class="s2">=&quot;colorPrimary&quot;</span><span class="s0">&gt;</span><span class="s3">@color/notificationBarColor</span><span class="s0">&lt;/item&gt;</span>
+        <span class="s0">&lt;item </span><span class="s1">name</span><span class="s2">=&quot;colorPrimaryVariant&quot;</span><span class="s0">&gt;</span><span class="s3">@color/actionBarColor</span><span class="s0">&lt;/item&gt;</span>
+        <span class="s0">&lt;item </span><span class="s1">name</span><span class="s2">=&quot;colorOnPrimary&quot;</span><span class="s0">&gt;</span><span class="s3">@color/white</span><span class="s0">&lt;/item&gt;</span>
+        <span class="s4">&lt;!-- Secondary brand color. --&gt;</span>
+        <span class="s0">&lt;item </span><span class="s1">name</span><span class="s2">=&quot;colorSecondary&quot;</span><span class="s0">&gt;</span><span class="s3">@color/teal_200</span><span class="s0">&lt;/item&gt;</span>
+        <span class="s0">&lt;item </span><span class="s1">name</span><span class="s2">=&quot;colorSecondaryVariant&quot;</span><span class="s0">&gt;</span><span class="s3">@color/teal_700</span><span class="s0">&lt;/item&gt;</span>
+        <span class="s0">&lt;item </span><span class="s1">name</span><span class="s2">=&quot;colorOnSecondary&quot;</span><span class="s0">&gt;</span><span class="s3">@color/black</span><span class="s0">&lt;/item&gt;</span>
+        <span class="s4">&lt;!-- Status bar color. --&gt;</span>
+        <span class="s0">&lt;item </span><span class="s1">name</span><span class="s2">=&quot;android:statusBarColor&quot; </span><span class="s1">tools:targetApi</span><span class="s2">=&quot;l&quot;</span><span class="s0">&gt;</span><span class="s3">?attr/colorPrimaryVariant</span><span class="s0">&lt;/item&gt;</span>
+        <span class="s4">&lt;!-- Customize your theme here. --&gt;</span>
+        <span class="s0">&lt;item </span><span class="s1">name</span><span class="s2">=&quot;editTextStyle&quot;</span><span class="s0">&gt;</span><span class="s3">@style/App_EditTextStyle</span><span class="s0">&lt;/item&gt;</span>
+    <span class="s0">&lt;/style&gt;</span>
+
+
+
+    <span class="s0">&lt;style </span><span class="s1">name</span><span class="s2">=&quot;App_EditTextStyle&quot; </span><span class="s1">parent</span><span class="s2">=&quot;@android:style/Widget.EditText&quot;</span><span class="s0">&gt;</span>
+<span class="s4">&lt;!--        &lt;item name=&quot;android:background&quot;&gt;@color/black&lt;/item&gt;--&gt;</span>
+<span class="s4">&lt;!--        &lt;item name=&quot;backgroundTint&quot;&gt;@color/mainBackgroundColor&lt;/item&gt;--&gt;</span>
+<span class="s4">&lt;!--        &lt;item name=&quot;android:textColor&quot;&gt;@color/white&lt;/item&gt;--&gt;</span>
+<span class="s4">&lt;!--        &lt;item name=&quot;android:animateOnClick&quot;&gt;@android:&lt;/item&gt;--&gt;</span>
+    <span class="s0">&lt;/style&gt;</span>
+
+    <span class="s0">&lt;style </span><span class="s1">name</span><span class="s2">=&quot;TextInputLayout&quot; </span><span class="s1">parent</span><span class="s2">=&quot;@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox&quot;</span><span class="s0">&gt;</span>
+        <span class="s0">&lt;item </span><span class="s1">name</span><span class="s2">=&quot;android:layout_width&quot;</span><span class="s0">&gt;</span><span class="s3">match_parent</span><span class="s0">&lt;/item&gt;</span>
+        <span class="s0">&lt;item </span><span class="s1">name</span><span class="s2">=&quot;android:layout_height&quot;</span><span class="s0">&gt;</span><span class="s3">wrap_content</span><span class="s0">&lt;/item&gt;</span>
+        <span class="s0">&lt;item </span><span class="s1">name</span><span class="s2">=&quot;android:layout_gravity&quot;</span><span class="s0">&gt;</span><span class="s3">center</span><span class="s0">&lt;/item&gt;</span>
+        <span class="s0">&lt;item </span><span class="s1">name</span><span class="s2">=&quot;android:layout_margin&quot;</span><span class="s0">&gt;</span><span class="s3">2pt</span><span class="s0">&lt;/item&gt;</span>
+        <span class="s0">&lt;item </span><span class="s1">name</span><span class="s2">=&quot;android:paddingLeft&quot;</span><span class="s0">&gt;</span><span class="s3">24dp</span><span class="s0">&lt;/item&gt;</span>
+        <span class="s0">&lt;item </span><span class="s1">name</span><span class="s2">=&quot;android:paddingRight&quot;</span><span class="s0">&gt;</span><span class="s3">24dp</span><span class="s0">&lt;/item&gt;</span>
+    <span class="s0">&lt;/style&gt;</span>
+
+
+<span class="s0">&lt;/resources&gt;</span></pre>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<html>
+<head>
+<title>root_preferences.xml</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #e8bf6a;}
+.s1 { color: #bababa;}
+.s2 { color: #6a8759;}
+.s3 { color: #a9b7c6;}
+.s4 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+root_preferences.xml</font>
+</center></td></tr></table>
+<pre><span class="s0">&lt;PreferenceScreen </span><span class="s1">xmlns:app</span><span class="s2">=&quot;http://schemas.android.com/apk/res-auto&quot;</span><span class="s0">&gt;</span>
+
+<span class="s4">&lt;!--    &lt;PreferenceCategory app:title=&quot;@string/messages_header&quot;&gt;--&gt;</span>
+
+<span class="s4">&lt;!--        &lt;EditTextPreference--&gt;</span>
+<span class="s4">&lt;!--            app:key=&quot;signature&quot;--&gt;</span>
+<span class="s4">&lt;!--            app:title=&quot;@string/signature_title&quot;--&gt;</span>
+<span class="s4">&lt;!--            app:useSimpleSummaryProvider=&quot;true&quot; /&gt;--&gt;</span>
+
+<span class="s4">&lt;!--        &lt;ListPreference--&gt;</span>
+<span class="s4">&lt;!--            app:defaultValue=&quot;reply&quot;--&gt;</span>
+<span class="s4">&lt;!--            app:entries=&quot;@array/reply_entries&quot;--&gt;</span>
+<span class="s4">&lt;!--            app:entryValues=&quot;@array/reply_values&quot;--&gt;</span>
+<span class="s4">&lt;!--            app:key=&quot;reply&quot;--&gt;</span>
+<span class="s4">&lt;!--            app:title=&quot;@string/reply_title&quot;--&gt;</span>
+<span class="s4">&lt;!--            app:useSimpleSummaryProvider=&quot;true&quot; /&gt;--&gt;</span>
+
+<span class="s4">&lt;!--    &lt;/PreferenceCategory&gt;--&gt;</span>
+
+    <span class="s0">&lt;PreferenceCategory </span><span class="s1">app:title</span><span class="s2">=&quot;@string/account_header&quot;</span><span class="s0">&gt;</span>
+
+        <span class="s0">&lt;Preference</span>
+            <span class="s1">app:title</span><span class="s2">=&quot;SIGN OUT&quot;</span>
+            <span class="s1">app:key</span><span class="s2">=&quot;@string/sign_out_settings_KEY&quot;</span>
+            <span class="s1">app:icon</span><span class="s2">=&quot;@drawable/ic_baseline_login_24&quot;</span>
+            <span class="s0">/&gt;</span>
+
+<span class="s4">&lt;!--        &lt;SwitchPreferenceCompat--&gt;</span>
+<span class="s4">&lt;!--            app:key=&quot;sync&quot;--&gt;</span>
+<span class="s4">&lt;!--            app:title=&quot;@string/sync_title&quot; /&gt;--&gt;</span>
+
+<span class="s4">&lt;!--        &lt;SwitchPreferenceCompat--&gt;</span>
+<span class="s4">&lt;!--            app:dependency=&quot;sync&quot;--&gt;</span>
+<span class="s4">&lt;!--            app:key=&quot;attachment&quot;--&gt;</span>
+<span class="s4">&lt;!--            app:summaryOff=&quot;@string/attachment_summary_off&quot;--&gt;</span>
+<span class="s4">&lt;!--            app:summaryOn=&quot;@string/attachment_summary_on&quot;--&gt;</span>
+<span class="s4">&lt;!--            app:title=&quot;@string/attachment_title&quot; /&gt;--&gt;</span>
+
+    <span class="s0">&lt;/PreferenceCategory&gt;</span>
+
+
+<span class="s0">&lt;/PreferenceScreen&gt;</span>
+
+</pre>
+</body>
+</html>

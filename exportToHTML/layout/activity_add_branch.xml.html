@@ -1,0 +1,197 @@
+<html>
+<head>
+<title>activity_add_branch.xml</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #e8bf6a;}
+.s1 { color: #bababa;}
+.s2 { color: #6a8759;}
+.s3 { color: #a9b7c6;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+activity_add_branch.xml</font>
+</center></td></tr></table>
+<pre><span class="s0">&lt;?</span><span class="s1">xml version</span><span class="s2">=&quot;1.0&quot; </span><span class="s1">encoding</span><span class="s2">=&quot;utf-8&quot;</span><span class="s0">?&gt;</span>
+<span class="s0">&lt;androidx.constraintlayout.widget.ConstraintLayout </span><span class="s1">xmlns:android</span><span class="s2">=&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    <span class="s1">xmlns:app</span><span class="s2">=&quot;http://schemas.android.com/apk/res-auto&quot;</span>
+    <span class="s1">xmlns:tools</span><span class="s2">=&quot;http://schemas.android.com/tools&quot;</span>
+    <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+    <span class="s1">android:layout_height</span><span class="s2">=&quot;match_parent&quot;</span>
+    <span class="s1">tools:context</span><span class="s2">=&quot;.activities.company.AddBranchActivity&quot;</span>
+    <span class="s1">android:background</span><span class="s2">=&quot;@color/mainBackgroundColor&quot;</span><span class="s0">&gt;</span>
+
+    <span class="s0">&lt;LinearLayout</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+        <span class="s1">android:layout_marginTop</span><span class="s2">=&quot;188dp&quot;</span>
+        <span class="s1">android:orientation</span><span class="s2">=&quot;vertical&quot;</span>
+        <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintHorizontal_bias</span><span class="s2">=&quot;0.0&quot;</span>
+        <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintTop_toTopOf</span><span class="s2">=&quot;parent&quot;</span><span class="s0">&gt;</span>
+
+
+        <span class="s0">&lt;com.google.android.material.textfield.TextInputLayout</span>
+            <span class="s1">style</span><span class="s2">=&quot;@style/TextInputLayout&quot;</span>
+            <span class="s1">android:hint</span><span class="s2">=&quot;@string/branchName&quot;</span>
+            <span class="s1">app:boxBackgroundColor</span><span class="s2">=&quot;@color/mainBackgroundColor&quot;</span>
+            <span class="s1">app:hintTextColor</span><span class="s2">=&quot;@color/actionBarColor&quot;</span><span class="s0">&gt;</span>
+
+            <span class="s0">&lt;com.google.android.material.textfield.TextInputEditText</span>
+                <span class="s1">android:id</span><span class="s2">=&quot;@+id/branch_name_add_branch&quot;</span>
+                <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                <span class="s1">android:ems</span><span class="s2">=&quot;10&quot;</span>
+                <span class="s1">android:inputType</span><span class="s2">=&quot;text&quot;</span>
+                <span class="s1">android:textColor</span><span class="s2">=&quot;@color/white&quot;</span>
+                <span class="s1">android:textSize</span><span class="s2">=&quot;20sp&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s0">&lt;/com.google.android.material.textfield.TextInputLayout&gt;</span>
+
+        <span class="s0">&lt;TextView</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/textView3&quot;</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:layout_gravity</span><span class="s2">=&quot;center&quot;</span>
+            <span class="s1">android:layout_margin</span><span class="s2">=&quot;10dp&quot;</span>
+            <span class="s1">android:text</span><span class="s2">=&quot;@string/numberOfQueue&quot;</span>
+            <span class="s1">android:textSize</span><span class="s2">=&quot;20sp&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s0">&lt;RadioGroup</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/radio_group_queue&quot;</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:layout_gravity</span><span class="s2">=&quot;center&quot;</span>
+            <span class="s1">android:checkedButton</span><span class="s2">=&quot;@id/radio_button_one_queue&quot;</span>
+            <span class="s1">android:orientation</span><span class="s2">=&quot;horizontal&quot;</span><span class="s0">&gt;</span>
+
+            <span class="s0">&lt;RadioButton</span>
+                <span class="s1">android:id</span><span class="s2">=&quot;@+id/radio_button_one_queue&quot;</span>
+                <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                <span class="s1">android:layout_marginHorizontal</span><span class="s2">=&quot;5dp&quot;</span>
+                <span class="s1">android:text</span><span class="s2">=&quot;@string/_1&quot;</span>
+                <span class="s1">android:textSize</span><span class="s2">=&quot;20sp&quot; </span><span class="s0">/&gt;</span>
+
+            <span class="s0">&lt;RadioButton</span>
+                <span class="s1">android:id</span><span class="s2">=&quot;@+id/radio_button_two_queue&quot;</span>
+                <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+                <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                <span class="s1">android:layout_marginHorizontal</span><span class="s2">=&quot;5dp&quot;</span>
+                <span class="s1">android:text</span><span class="s2">=&quot;@string/_2&quot;</span>
+                <span class="s1">android:textSize</span><span class="s2">=&quot;20sp&quot; </span><span class="s0">/&gt;</span>
+        <span class="s0">&lt;/RadioGroup&gt;</span>
+
+
+        <span class="s0">&lt;com.google.android.material.textfield.TextInputLayout</span>
+            <span class="s1">style</span><span class="s2">=&quot;@style/TextInputLayout&quot;</span>
+            <span class="s1">android:hint</span><span class="s2">=&quot;@string/first_queue_name&quot;</span>
+            <span class="s1">app:boxBackgroundColor</span><span class="s2">=&quot;@color/mainBackgroundColor&quot;</span>
+            <span class="s1">app:hintTextColor</span><span class="s2">=&quot;@color/actionBarColor&quot;</span><span class="s0">&gt;</span>
+
+            <span class="s0">&lt;com.google.android.material.textfield.TextInputEditText</span>
+                <span class="s1">android:id</span><span class="s2">=&quot;@+id/queue_one_name&quot;</span>
+                <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                <span class="s1">android:ems</span><span class="s2">=&quot;10&quot;</span>
+                <span class="s1">android:inputType</span><span class="s2">=&quot;text&quot;</span>
+                <span class="s1">android:textColor</span><span class="s2">=&quot;@color/white&quot;</span>
+                <span class="s1">android:textSize</span><span class="s2">=&quot;20sp&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s0">&lt;/com.google.android.material.textfield.TextInputLayout&gt;</span>
+
+        <span class="s0">&lt;com.google.android.material.textfield.TextInputLayout</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/queue_two_name_layout&quot;</span>
+            <span class="s1">style</span><span class="s2">=&quot;@style/TextInputLayout&quot;</span>
+            <span class="s1">android:hint</span><span class="s2">=&quot;@string/second_queue_name&quot;</span>
+            <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span>
+            <span class="s1">app:boxBackgroundColor</span><span class="s2">=&quot;@color/mainBackgroundColor&quot;</span>
+            <span class="s1">app:hintTextColor</span><span class="s2">=&quot;@color/actionBarColor&quot;</span><span class="s0">&gt;</span>
+
+            <span class="s0">&lt;com.google.android.material.textfield.TextInputEditText</span>
+                <span class="s1">android:id</span><span class="s2">=&quot;@+id/queue_two_name&quot;</span>
+                <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+                <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+                <span class="s1">android:ems</span><span class="s2">=&quot;10&quot;</span>
+                <span class="s1">android:inputType</span><span class="s2">=&quot;text&quot;</span>
+                <span class="s1">android:textColor</span><span class="s2">=&quot;@color/white&quot;</span>
+                <span class="s1">android:textSize</span><span class="s2">=&quot;20sp&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s0">&lt;/com.google.android.material.textfield.TextInputLayout&gt;</span>
+
+        <span class="s0">&lt;ImageButton</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/location_icon_add_branch_image&quot;</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;70dp&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;70dp&quot;</span>
+            <span class="s1">android:layout_gravity</span><span class="s2">=&quot;center&quot;</span>
+            <span class="s1">android:background</span><span class="s2">=&quot;@drawable/location_icon&quot; </span><span class="s0">/&gt;</span>
+
+
+    <span class="s0">&lt;/LinearLayout&gt;</span>
+
+    <span class="s0">&lt;Button</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/addBranch&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+        <span class="s1">android:text</span><span class="s2">=&quot;@string/add&quot;</span>
+        <span class="s1">android:layout_margin</span><span class="s2">=&quot;15dp&quot;</span>
+        <span class="s1">android:padding</span><span class="s2">=&quot;5dp&quot;</span>
+        <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintBottom_toTopOf</span><span class="s2">=&quot;@id/cancel_add_branch&quot;</span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;Button</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/cancel_add_branch&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+        <span class="s1">android:text</span><span class="s2">=&quot;@string/cancel&quot;</span>
+        <span class="s1">android:layout_margin</span><span class="s2">=&quot;15dp&quot;</span>
+        <span class="s1">android:padding</span><span class="s2">=&quot;5dp&quot;</span>
+        <span class="s1">app:layout_constraintStart_toStartOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintEnd_toEndOf</span><span class="s2">=&quot;parent&quot;</span>
+        <span class="s1">app:layout_constraintBottom_toBottomOf</span><span class="s2">=&quot;parent&quot;</span><span class="s0">/&gt;</span>
+
+    <span class="s0">&lt;RelativeLayout</span>
+        <span class="s1">android:id</span><span class="s2">=&quot;@+id/loadingPanel_addBranch&quot;</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;match_parent&quot;</span>
+        <span class="s1">android:gravity</span><span class="s2">=&quot;center&quot;</span>
+        <span class="s1">android:visibility</span><span class="s2">=&quot;gone&quot;</span><span class="s0">&gt;</span>
+
+        <span class="s0">&lt;ProgressBar</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:indeterminate</span><span class="s2">=&quot;true&quot; </span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;/RelativeLayout&gt;</span>
+
+    <span class="s0">&lt;com.google.android.material.textfield.TextInputLayout</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+        <span class="s1">tools:layout_editor_absoluteX</span><span class="s2">=&quot;174dp&quot;</span>
+        <span class="s1">tools:layout_editor_absoluteY</span><span class="s2">=&quot;46dp&quot;</span><span class="s0">&gt;</span>
+
+        <span class="s0">&lt;com.google.android.material.textfield.TextInputEditText</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/Admin_Email&quot;</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:hint</span><span class="s2">=&quot;Admin email;&quot; </span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;/com.google.android.material.textfield.TextInputLayout&gt;</span>
+
+    <span class="s0">&lt;com.google.android.material.textfield.TextInputLayout</span>
+        <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+        <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+        <span class="s1">tools:layout_editor_absoluteX</span><span class="s2">=&quot;194dp&quot;</span>
+        <span class="s1">tools:layout_editor_absoluteY</span><span class="s2">=&quot;122dp&quot;</span><span class="s0">&gt;</span>
+
+        <span class="s0">&lt;com.google.android.material.textfield.TextInputEditText</span>
+            <span class="s1">android:id</span><span class="s2">=&quot;@+id/Admin_Password&quot;</span>
+            <span class="s1">android:layout_width</span><span class="s2">=&quot;match_parent&quot;</span>
+            <span class="s1">android:layout_height</span><span class="s2">=&quot;wrap_content&quot;</span>
+            <span class="s1">android:hint</span><span class="s2">=&quot;Password&quot; </span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;/com.google.android.material.textfield.TextInputLayout&gt;</span>
+<span class="s0">&lt;/androidx.constraintlayout.widget.ConstraintLayout&gt;</span></pre>
+</body>
+</html>

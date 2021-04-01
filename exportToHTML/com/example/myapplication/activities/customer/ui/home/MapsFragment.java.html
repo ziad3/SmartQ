@@ -1,0 +1,270 @@
+<html>
+<head>
+<title>MapsFragment.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+.s4 { color: #629755; font-style: italic;}
+.s5 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+MapsFragment.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.myapplication.activities.customer.ui.home</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">androidx.annotation.NonNull</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.annotation.Nullable</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.core.app.ActivityCompat</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.core.content.ContextCompat</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.fragment.app.Fragment</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">android.Manifest</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.app.PendingIntent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.pm.PackageManager</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.graphics.Color</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.util.Log</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.LayoutInflater</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.ViewGroup</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Button</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Toast</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.example.myapplication.R</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.myapplication.activities.GeofenceHelper</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.myapplication.objects.Branch</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.location.Geofence</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.location.GeofencingClient</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.location.GeofencingRequest</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.location.LocationServices</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.maps.CameraUpdateFactory</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.maps.GoogleMap</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.maps.OnMapReadyCallback</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.maps.SupportMapFragment</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.maps.model.CircleOptions</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.maps.model.LatLng</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.maps.model.MarkerOptions</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.tasks.OnFailureListener</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.tasks.OnSuccessListener</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.database.DatabaseReference</span><span class="s0">;</span>
+
+<span class="s0">import static </span><span class="s1">com.example.myapplication.activities.MainLoadingPage.BRANCH_CLASS</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">MapsFragment </span><span class="s0">extends </span><span class="s1">Fragment {</span>
+    <span class="s0">private </span><span class="s1">GoogleMap mMap</span><span class="s0">;</span>
+    <span class="s0">private static final </span><span class="s1">String TAG = </span><span class="s2">&quot;MapsActivity&quot;</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">DatabaseReference reference</span><span class="s0">;</span>
+
+    <span class="s0">private </span><span class="s1">GeofencingClient geofencingClient</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">GeofenceHelper geofenceHelper</span><span class="s0">;</span>
+
+    <span class="s0">private float </span><span class="s1">GEOFENCE_RADIUS = </span><span class="s3">1000</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String GEOFENCE_ID = </span><span class="s2">&quot;SOME_GEOFENCE_ID&quot;</span><span class="s0">;</span>
+
+    <span class="s0">private int </span><span class="s1">FINE_LOCATION_ACCESS_REQUEST_CODE = </span><span class="s3">10001</span><span class="s0">;</span>
+    <span class="s0">private int </span><span class="s1">BACKGROUND_LOCATION_ACCESS_REQUEST_CODE = </span><span class="s3">10002</span><span class="s0">;</span>
+    <span class="s1">Branch branch</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">OnMapReadyCallback callback = </span><span class="s0">new </span><span class="s1">OnMapReadyCallback() {</span>
+
+        <span class="s4">/**</span>
+         <span class="s4">* Manipulates the map once available.</span>
+         <span class="s4">* getActivity() callback is triggered when the map is ready to be used.</span>
+         <span class="s4">* getActivity() is where we can add markers or lines, add listeners or move the camera.</span>
+         <span class="s4">* In getActivity() case, we just add a marker near Sydney, Australia.</span>
+         <span class="s4">* If Google Play services is not installed on the device, the user will be prompted to</span>
+         <span class="s4">* install it inside the SupportMapFragment. getActivity() method will only be triggered once the</span>
+         <span class="s4">* user has installed Google Play services and returned to the app.</span>
+         <span class="s4">*/</span>
+
+        <span class="s1">@Override</span>
+        <span class="s0">public void </span><span class="s1">onMapReady(GoogleMap googleMap) {</span>
+            <span class="s1">LatLng sydney = </span><span class="s0">new </span><span class="s1">LatLng(-</span><span class="s3">34</span><span class="s0">, </span><span class="s3">151</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">googleMap.addMarker(</span><span class="s0">new </span><span class="s1">MarkerOptions().position(sydney).title(</span><span class="s2">&quot;Marker in Sydney&quot;</span><span class="s1">))</span><span class="s0">;</span>
+            <span class="s1">googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))</span><span class="s0">;</span>
+            <span class="s1">mMap = googleMap</span><span class="s0">;</span>
+            <span class="s1">mMap.getUiSettings().setZoomControlsEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+
+            <span class="s5">// Add a marker in Sydney and move the camera</span>
+            <span class="s1">LatLng eiffel = </span><span class="s0">new </span><span class="s1">LatLng(</span><span class="s3">48.8589</span><span class="s0">, </span><span class="s3">2.29365</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eiffel</span><span class="s0">, </span><span class="s3">16</span><span class="s1">))</span><span class="s0">;</span>
+            <span class="s1">mMap.getUiSettings().setZoomControlsEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+
+            <span class="s1">enableUserLocation()</span><span class="s0">;</span>
+
+
+            <span class="s1">setCurrentLocationCircle()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span><span class="s0">;</span>
+
+    <span class="s1">@Nullable</span>
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">View onCreateView(@NonNull LayoutInflater inflater</span><span class="s0">,</span>
+                             <span class="s1">@Nullable ViewGroup container</span><span class="s0">,</span>
+                             <span class="s1">@Nullable Bundle savedInstanceState) {</span>
+        <span class="s5">//  String S = getActivity().getIntent().getExtras().getString(&quot;name&quot;);</span>
+        <span class="s1">Log.d(</span><span class="s2">&quot;ffff&quot;</span><span class="s0">,</span><span class="s2">&quot;Ww&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">View root = inflater.inflate(R.layout.fragment_maps</span><span class="s0">, </span><span class="s1">container</span><span class="s0">, false</span><span class="s1">)</span><span class="s0">;</span>
+
+        <span class="s1">geofencingClient = LocationServices.getGeofencingClient(getActivity())</span><span class="s0">;</span>
+        <span class="s1">geofenceHelper = </span><span class="s0">new </span><span class="s1">GeofenceHelper(getActivity())</span><span class="s0">;</span>
+        <span class="s1">Button mapButtom = root.findViewById(R.id.map_button)</span><span class="s0">;</span>
+        <span class="s5">//   Log.d(&quot;kkkk&quot;, &quot;jjj&quot; + S);</span>
+        <span class="s5">//   if (S.equals(&quot;y&quot;)) {</span>
+        <span class="s1">mapButtom.setOnClickListener(t -&gt; {</span>
+            <span class="s1">BranchDetailsFragment branchDetailsFragment = </span><span class="s0">new </span><span class="s1">BranchDetailsFragment()</span><span class="s0">;</span>
+            <span class="s1">Bundle bundle = </span><span class="s0">new </span><span class="s1">Bundle()</span><span class="s0">;</span>
+            <span class="s1">bundle.putSerializable(BRANCH_CLASS</span><span class="s0">, </span><span class="s1">branch)</span><span class="s0">;</span>
+            <span class="s1">branchDetailsFragment.setArguments(bundle)</span><span class="s0">;</span>
+            <span class="s1">getParentFragmentManager().beginTransaction()</span>
+<span class="s5">//                            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE)</span>
+                    <span class="s1">.addToBackStack(</span><span class="s0">null</span><span class="s1">)</span>
+<span class="s5">//                            .hide(homeFragment)</span>
+                    <span class="s1">.replace(R.id.nav_host_fragment</span><span class="s0">, </span><span class="s1">branchDetailsFragment)</span>
+                    <span class="s1">.commit()</span><span class="s0">;</span>
+        <span class="s1">})</span><span class="s0">;</span>
+
+
+        <span class="s0">return </span><span class="s1">root</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">onViewCreated(@NonNull View view</span><span class="s0">, </span><span class="s1">@Nullable Bundle savedInstanceState) {</span>
+        <span class="s0">super</span><span class="s1">.onViewCreated(view</span><span class="s0">, </span><span class="s1">savedInstanceState)</span><span class="s0">;</span>
+        <span class="s1">SupportMapFragment mapFragment =</span>
+                <span class="s1">(SupportMapFragment) getChildFragmentManager().findFragmentById(R.id.map)</span><span class="s0">;</span>
+        <span class="s0">if </span><span class="s1">(mapFragment != </span><span class="s0">null</span><span class="s1">) {</span>
+            <span class="s1">mapFragment.getMapAsync(callback)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+    <span class="s0">private void </span><span class="s1">enableUserLocation() {</span>
+        <span class="s0">if </span><span class="s1">(ContextCompat.checkSelfPermission(getActivity()</span><span class="s0">, </span><span class="s1">Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {</span>
+            <span class="s1">mMap.setMyLocationEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+            <span class="s5">//Ask for permission</span>
+            <span class="s0">if </span><span class="s1">(ActivityCompat.shouldShowRequestPermissionRationale(getActivity()</span><span class="s0">, </span><span class="s1">Manifest.permission.ACCESS_FINE_LOCATION)) {</span>
+                <span class="s5">//We need to show user a dialog for displaying why the permission is needed and then ask for the permission...</span>
+                <span class="s1">ActivityCompat.requestPermissions(getActivity()</span><span class="s0">, new </span><span class="s1">String[]{Manifest.permission.ACCESS_FINE_LOCATION}</span><span class="s0">, </span><span class="s1">FINE_LOCATION_ACCESS_REQUEST_CODE)</span><span class="s0">;</span>
+            <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                <span class="s1">ActivityCompat.requestPermissions(getActivity()</span><span class="s0">, new </span><span class="s1">String[]{Manifest.permission.ACCESS_FINE_LOCATION}</span><span class="s0">, </span><span class="s1">FINE_LOCATION_ACCESS_REQUEST_CODE)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+
+
+ <span class="s5">//   @Override</span>
+   <span class="s5">/* public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) { 
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults); 
+        if (requestCode == FINE_LOCATION_ACCESS_REQUEST_CODE) { 
+            if (grantResults.length &gt; 0 &amp;&amp; grantResults[0] == PackageManager.PERMISSION_GRANTED) { 
+                //We have the permission 
+                // mMap.setMyLocationEnabled(true); 
+                if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &amp;&amp; ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) { 
+                    // TODO: Consider calling 
+                    //    ActivityCompat#requestPermissions 
+                    // here to request the missing permissions, and then overriding 
+                    //   public void onRequestPermissionsResult(int requestCode, String[] permissions, 
+                    //                                          int[] grantResults) 
+                    // to handle the case where the user grants the permission. See the documentation 
+                    // for ActivityCompat#requestPermissions for more details. 
+                    return; 
+                } 
+                mMap.setMyLocationEnabled(true); 
+            } else { 
+                //We do not have the permission.. 
+ 
+            } 
+        } 
+ 
+        if (requestCode == BACKGROUND_LOCATION_ACCESS_REQUEST_CODE) { 
+            if (grantResults.length &gt; 0 &amp;&amp; grantResults[0] == PackageManager.PERMISSION_GRANTED) { 
+                //We have the permission 
+                Toast.makeText(getActivity(), &quot;You can add geofences...&quot;, Toast.LENGTH_SHORT).show(); 
+            } else { 
+                //We do not have the permission.. 
+                Toast.makeText(getActivity(), &quot;Background location access is neccessary for geofences to trigger...&quot;, Toast.LENGTH_SHORT).show(); 
+            } 
+        } 
+    } 
+*/</span>
+    <span class="s0">private void </span><span class="s1">addGeofence(LatLng latLng</span><span class="s0">, float </span><span class="s1">radius) {</span>
+
+        <span class="s1">Geofence geofence = geofenceHelper.getGeofence(GEOFENCE_ID</span><span class="s0">, </span><span class="s1">latLng</span><span class="s0">, </span><span class="s1">radius</span><span class="s0">, </span><span class="s1">Geofence.GEOFENCE_TRANSITION_ENTER | Geofence.GEOFENCE_TRANSITION_DWELL | Geofence.GEOFENCE_TRANSITION_EXIT)</span><span class="s0">;</span>
+        <span class="s1">GeofencingRequest geofencingRequest = geofenceHelper.getGeofencingRequest(geofence)</span><span class="s0">;</span>
+        <span class="s1">PendingIntent pendingIntent = geofenceHelper.getPendingIntent()</span><span class="s0">;</span>
+
+        <span class="s0">if </span><span class="s1">(ActivityCompat.checkSelfPermission(getActivity()</span><span class="s0">, </span><span class="s1">Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {</span>
+            <span class="s5">// TODO: Consider calling</span>
+            <span class="s5">//    ActivityCompat#requestPermissions</span>
+            <span class="s5">// here to request the missing permissions, and then overriding</span>
+            <span class="s5">//   public void onRequestPermissionsResult(int requestCode, String[] permissions,</span>
+            <span class="s5">//                                          int[] grantResults)</span>
+            <span class="s5">// to handle the case where the user grants the permission. See the documentation</span>
+            <span class="s5">// for ActivityCompat#requestPermissions for more details.</span>
+            <span class="s0">return;</span>
+        <span class="s1">}</span>
+       <span class="s1">geofencingClient.addGeofences(geofencingRequest</span><span class="s0">, </span><span class="s1">pendingIntent)</span>
+                <span class="s1">.addOnSuccessListener(</span><span class="s0">new </span><span class="s1">OnSuccessListener&lt;Void&gt;() {</span>
+                    <span class="s1">@Override</span>
+                    <span class="s0">public void </span><span class="s1">onSuccess(Void aVoid) {</span>
+                    <span class="s1">}</span>
+                <span class="s1">})</span>
+                <span class="s1">.addOnFailureListener(</span><span class="s0">new </span><span class="s1">OnFailureListener() {</span>
+                    <span class="s1">@Override</span>
+                    <span class="s0">public void </span><span class="s1">onFailure(@NonNull Exception e) {</span>
+                        <span class="s1">String errorMessage = geofenceHelper.getErrorString(e)</span><span class="s0">;</span>
+                    <span class="s1">}</span>
+                <span class="s1">})</span><span class="s0">;</span>
+    <span class="s1">}</span>
+   <span class="s5">/* private void addMarker(LatLng latLng) { 
+        MarkerOptions markerOptions = new MarkerOptions().position(latLng); 
+        mMap.addMarker(markerOptions); 
+    }*/</span>
+    <span class="s0">private void </span><span class="s1">addCircle(LatLng latLng</span><span class="s0">, float </span><span class="s1">radius) {</span>
+        <span class="s1">CircleOptions circleOptions = </span><span class="s0">new </span><span class="s1">CircleOptions()</span><span class="s0">;</span>
+        <span class="s1">circleOptions.center(latLng)</span><span class="s0">;</span>
+        <span class="s1">circleOptions.radius(radius)</span><span class="s0">;</span>
+        <span class="s1">circleOptions.strokeColor(Color.argb(</span><span class="s3">255</span><span class="s0">, </span><span class="s3">255</span><span class="s0">, </span><span class="s3">0</span><span class="s0">,</span><span class="s3">0</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">circleOptions.fillColor(Color.argb(</span><span class="s3">64</span><span class="s0">, </span><span class="s3">255</span><span class="s0">, </span><span class="s3">0</span><span class="s0">,</span><span class="s3">0</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">circleOptions.strokeWidth(</span><span class="s3">4</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">mMap.addCircle(circleOptions)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+    <span class="s0">private void </span><span class="s1">setCurrentLocationCircle(){</span>
+        <span class="s5">//get current location from intent</span>
+        <span class="s1">Bundle bundle = getArguments()</span><span class="s0">;</span>
+
+        <span class="s0">if </span><span class="s1">(bundle != </span><span class="s0">null</span><span class="s1">)</span>
+            <span class="s1">branch = (Branch) bundle.getSerializable(BRANCH_CLASS)</span><span class="s0">;</span>
+
+        <span class="s0">if</span><span class="s1">(branch == </span><span class="s0">null</span><span class="s1">)</span>
+            <span class="s0">return;</span>
+
+        <span class="s0">if</span><span class="s1">(branch.getLatitude() == </span><span class="s3">0</span><span class="s1">)</span><span class="s5">// no previews location indicated</span>
+            <span class="s0">return;</span>
+
+        <span class="s1">LatLng latLng = </span><span class="s0">new </span><span class="s1">LatLng(branch.getLatitude()</span><span class="s0">,</span><span class="s1">branch.getLongitude())</span><span class="s0">;</span>
+        <span class="s1">addCircle(latLng</span><span class="s0">,</span><span class="s1">branch.getRadius())</span><span class="s0">;</span>
+        <span class="s1">addGeofence(latLng</span><span class="s0">, </span><span class="s1">GEOFENCE_RADIUS)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+<span class="s5">//    private void returnWithInfo(LatLng latLng, float radius){</span>
+<span class="s5">//        Intent returnIntent = new Intent();</span>
+<span class="s5">//        returnIntent.putExtra(LATITUDE,latLng.latitude);</span>
+<span class="s5">//        returnIntent.putExtra(LONGITUDE,latLng.longitude);</span>
+<span class="s5">//        returnIntent.putExtra(RADIUS,radius);</span>
+<span class="s5">//        setResult(Activity.RESULT_OK,returnIntent);</span>
+<span class="s5">//        finish();</span>
+<span class="s5">//    }</span>
+
+<span class="s1">}</span></pre>
+</body>
+</html>

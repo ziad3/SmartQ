@@ -1,0 +1,204 @@
+<html>
+<head>
+<title>Admin_Activity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #808080;}
+.s4 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Admin_Activity.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.myapplication.activities.admin</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.LayoutInflater</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.ViewGroup</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Button</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.RelativeLayout</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.TextView</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">androidx.annotation.NonNull</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.appcompat.app.AppCompatActivity</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.recyclerview.widget.LinearLayoutManager</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.recyclerview.widget.RecyclerView</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.example.myapplication.R</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.myapplication.activities.LoginPageActivity</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.myapplication.activities.RegisterCompanyActivity</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.myapplication.objects.Company</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.firebase.ui.database.FirebaseRecyclerAdapter</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.firebase.ui.database.FirebaseRecyclerOptions</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.auth.FirebaseAuth</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.database.DatabaseReference</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.database.FirebaseDatabase</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.database.Query</span><span class="s0">;</span>
+<span class="s0">import static </span><span class="s1">com.example.myapplication.activities.MainLoadingPage.COMPANY</span><span class="s0">;</span>
+<span class="s0">import static </span><span class="s1">com.example.myapplication.activities.MainLoadingPage.COMPANY_ID</span><span class="s0">;</span>
+<span class="s0">import static </span><span class="s1">com.example.myapplication.activities.MainLoadingPage.Company_Control</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">Admin_Activity </span><span class="s0">extends </span><span class="s1">AppCompatActivity {</span>
+    <span class="s0">private final </span><span class="s1">FirebaseAuth firebaseAuth = FirebaseAuth.getInstance()</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">RelativeLayout progressBar</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance()</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">FirebaseRecyclerAdapter&lt;Company</span><span class="s0">, </span><span class="s1">BranchHolder&gt; firebaseRecyclerAdapter</span><span class="s0">;</span>
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) {</span>
+        <span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span>
+        <span class="s1">setContentView(R.layout.acitvity_admin)</span><span class="s0">;</span>
+        <span class="s1">setTitle(</span><span class="s2">&quot;Admin Page&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">progressBar = findViewById(R.id.loadingPanel_branches_company)</span><span class="s0">;</span>
+
+        <span class="s1">loadingBranches()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onStart() {</span>
+        <span class="s0">super</span><span class="s1">.onStart()</span><span class="s0">;</span>
+
+
+
+        <span class="s0">if</span><span class="s1">(firebaseRecyclerAdapter != </span><span class="s0">null</span><span class="s1">)</span>
+            <span class="s1">firebaseRecyclerAdapter.startListening()</span><span class="s0">;</span>
+
+    <span class="s1">}</span>
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onStop() {</span>
+        <span class="s0">super</span><span class="s1">.onStop()</span><span class="s0">;</span>
+
+        <span class="s0">if </span><span class="s1">(firebaseRecyclerAdapter!= </span><span class="s0">null</span><span class="s1">) {</span>
+            <span class="s1">firebaseRecyclerAdapter.stopListening()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">loadingBranches() {</span>
+        <span class="s0">if</span><span class="s1">(firebaseAuth.getCurrentUser() == </span><span class="s0">null</span><span class="s1">){</span>
+            <span class="s1">startActivity(</span><span class="s0">new </span><span class="s1">Intent(</span><span class="s0">this, </span><span class="s1">LoginPageActivity.</span><span class="s0">class</span><span class="s1">))</span><span class="s0">;</span>
+            <span class="s0">return;</span>
+        <span class="s1">}</span>
+
+<span class="s3">//        progressBar.setVisibility(View.VISIBLE);</span>
+
+
+        <span class="s1">DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference()</span><span class="s0">;</span>
+        <span class="s1">Query query = rootRef.child(COMPANY).orderByChild(COMPANY_ID)</span><span class="s0">;</span>
+        <span class="s3">//I change the index to branch name for customer interface, I think its better for performance -- Muath</span>
+
+
+        <span class="s1">RecyclerView recyclerView = findViewById(R.id.branches_recycler_view)</span><span class="s0">;</span>
+        <span class="s1">recyclerView.setLayoutManager(</span><span class="s0">new </span><span class="s1">LinearLayoutManager(</span><span class="s0">this</span><span class="s1">))</span><span class="s0">;</span>
+
+        <span class="s1">FirebaseRecyclerOptions&lt;Company&gt; firebaseRecyclerOptions = </span><span class="s0">new </span><span class="s1">FirebaseRecyclerOptions.Builder&lt;Company&gt;()</span>
+                <span class="s1">.setQuery(query</span><span class="s0">, </span><span class="s1">Company.</span><span class="s0">class</span><span class="s1">)</span>
+                <span class="s1">.build()</span><span class="s0">;</span>
+
+        <span class="s1">firebaseRecyclerAdapter = </span><span class="s0">new </span><span class="s1">FirebaseRecyclerAdapter&lt;Company</span><span class="s0">, </span><span class="s1">BranchHolder&gt;(firebaseRecyclerOptions) {</span>
+
+
+            <span class="s1">@Override</span>
+            <span class="s0">protected void </span><span class="s1">onBindViewHolder(@NonNull BranchHolder branchHolder</span><span class="s0">, int </span><span class="s1">i</span><span class="s0">, </span><span class="s1">@NonNull Company company) {</span>
+
+
+                <span class="s1">branchHolder.setBranch(company)</span><span class="s0">;</span>
+                <span class="s1">progressBar.setVisibility(View.GONE)</span><span class="s0">;</span>
+                <span class="s1">branchHolder.itemView.setOnClickListener(t -&gt;</span>
+                <span class="s1">{</span>
+                    <span class="s1">Intent intent = </span><span class="s0">new </span><span class="s1">Intent(getApplicationContext()</span><span class="s0">, </span><span class="s1">CompanyControl.</span><span class="s0">class</span><span class="s1">)</span>
+                            <span class="s1">.putExtra(COMPANY</span><span class="s0">, </span><span class="s1">getRef(i).toString())</span>
+                            <span class="s1">.putExtra(Company_Control</span><span class="s0">,  </span><span class="s1">getItem(i))</span><span class="s0">;</span>
+                    <span class="s1">startActivity(intent)</span><span class="s0">;</span>
+                <span class="s1">})</span><span class="s0">;</span>
+            <span class="s1">}</span>
+
+            <span class="s1">@NonNull</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public </span><span class="s1">BranchHolder onCreateViewHolder(@NonNull ViewGroup parent</span><span class="s0">, int </span><span class="s1">viewType) {</span>
+                <span class="s1">View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.recycle_panel</span><span class="s0">, </span><span class="s1">parent</span><span class="s0">, false</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s0">return new </span><span class="s1">BranchHolder(view)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+
+            <span class="s1">@NonNull</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public </span><span class="s1">Company getItem(</span><span class="s0">int </span><span class="s1">position) {</span>
+                <span class="s0">return super</span><span class="s1">.getItem(position)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+
+            <span class="s1">@NonNull</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public </span><span class="s1">DatabaseReference getRef(</span><span class="s0">int </span><span class="s1">position) {</span>
+                <span class="s0">return super</span><span class="s1">.getRef(position)</span><span class="s0">;</span>
+                        <span class="s1">}</span>
+
+
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onDataChanged() {</span>
+                <span class="s0">super</span><span class="s1">.onDataChanged()</span><span class="s0">;</span>
+                <span class="s0">if</span><span class="s1">(getItemCount() == </span><span class="s4">0</span><span class="s1">)</span>
+                    <span class="s1">progressBar.setVisibility(View.GONE)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span><span class="s0">;</span>
+        <span class="s1">recyclerView.setAdapter(firebaseRecyclerAdapter)</span><span class="s0">;</span>
+
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">addBranchButtonClicked(View view) {</span>
+        <span class="s1">Button move = findViewById(R.id.button_addBranch)</span><span class="s0">;</span>
+        <span class="s1">Intent intent = </span><span class="s0">new </span><span class="s1">Intent(</span><span class="s0">this, </span><span class="s1">RegisterCompanyActivity.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">startActivity(intent)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+
+
+
+    <span class="s0">public static class </span><span class="s1">BranchHolder </span><span class="s0">extends </span><span class="s1">RecyclerView.ViewHolder </span><span class="s0">implements </span><span class="s1">View.OnClickListener {</span>
+        <span class="s0">private </span><span class="s1">TextView branchID</span><span class="s0">, </span><span class="s1">branchNameTextView</span><span class="s0">,</span><span class="s1">location</span><span class="s0">,</span><span class="s1">companyID</span><span class="s0">, </span><span class="s1">UsernameTextView</span><span class="s0">,</span><span class="s1">BranchEmailTextView</span><span class="s0">;</span>
+
+        <span class="s0">public </span><span class="s1">BranchHolder(View itemView) {</span>
+            <span class="s0">super</span><span class="s1">(itemView)</span><span class="s0">;</span>
+            <span class="s0">this</span><span class="s1">.branchNameTextView = itemView.findViewById(R.id.itemBranchName)</span><span class="s0">;</span>
+            <span class="s0">this</span><span class="s1">.UsernameTextView = itemView.findViewById(R.id.itemBranchQueueNumber)</span><span class="s0">;</span>
+            <span class="s0">this</span><span class="s1">.BranchEmailTextView=itemView.findViewById(R.id.itemBranchEmail)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+
+        <span class="s1">@Override</span>
+        <span class="s0">public void </span><span class="s1">onClick(View view) {</span>
+
+        <span class="s1">}</span>
+        <span class="s0">public void </span><span class="s1">setBranch(Company branch) {</span>
+            <span class="s1">String companyName = branch.getCompany_name()</span><span class="s0">;</span>
+            <span class="s1">String companyEmail = branch.getEmail()</span><span class="s0">;</span>
+            <span class="s1">String companyUsername=branch.getCompany_name()</span><span class="s0">;</span>
+            <span class="s1">branchNameTextView.setText(companyName)</span><span class="s0">;</span>
+            <span class="s1">UsernameTextView.setText(companyUsername)</span><span class="s0">;</span>
+            <span class="s1">BranchEmailTextView.setText(companyEmail)</span><span class="s0">;</span>
+
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+
+    <span class="s0">public void </span><span class="s1">Logout(View view){</span>
+        <span class="s1">firebaseAuth.signOut()</span><span class="s0">;</span>
+        <span class="s1">finish()</span><span class="s0">;</span>
+        <span class="s1">startActivity(</span><span class="s0">new </span><span class="s1">Intent(Admin_Activity.</span><span class="s0">this, </span><span class="s1">LoginPageActivity.</span><span class="s0">class</span><span class="s1">))</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+
+
+
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<html>
+<head>
+<title>CustomerInterfaceActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6897bb;}
+.s3 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+CustomerInterfaceActivity.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.myapplication.activities.customer</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">android.Manifest</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.app.PendingIntent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.pm.PackageManager</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">androidx.appcompat.app.AppCompatActivity</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.core.app.ActivityCompat</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.core.content.ContextCompat</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.navigation.NavController</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.navigation.Navigation</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.navigation.ui.AppBarConfiguration</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.navigation.ui.NavigationUI</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.example.myapplication.R</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.myapplication.activities.GeofenceBroadcastReceiver</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.myapplication.activities.LoginPageActivity</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.myapplication.activities.customer.ui.home.HomeFragment</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.maps.CameraUpdateFactory</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.maps.GoogleMap</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.maps.OnMapReadyCallback</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.maps.SupportMapFragment</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.maps.model.LatLng</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.material.bottomnavigation.BottomNavigationView</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.auth.FirebaseAuth</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">CustomerInterfaceActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity {</span>
+    <span class="s0">private </span><span class="s1">HomeFragment homeFragment</span><span class="s0">;</span>
+    <span class="s0">private final </span><span class="s1">FirebaseAuth firebaseAuth = FirebaseAuth.getInstance()</span><span class="s0">;</span>
+
+    <span class="s0">private </span><span class="s1">GoogleMap mMap</span><span class="s0">;</span>
+    <span class="s1">PendingIntent pendingIntent</span><span class="s0">;</span>
+    <span class="s0">private int </span><span class="s1">FINE_LOCATION_ACCESS_REQUEST_CODE = </span><span class="s2">10001</span><span class="s0">;</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) {</span>
+        <span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span>
+        <span class="s1">setContentView(R.layout.activity_customer_interface_list)</span><span class="s0">;</span>
+        <span class="s1">BottomNavigationView navView = findViewById(R.id.nav_view)</span><span class="s0">;</span>
+        <span class="s3">// Passing each menu ID as a set of Ids because each</span>
+        <span class="s3">// menu should be considered as top level destinations.</span>
+        <span class="s1">AppBarConfiguration appBarConfiguration = </span><span class="s0">new </span><span class="s1">AppBarConfiguration.Builder(</span>
+                <span class="s1">R.id.navigation_home</span><span class="s0">, </span><span class="s1">R.id.navigation_dashboard</span><span class="s0">, </span><span class="s1">R.id.navigation_settings)</span>
+                <span class="s1">.build()</span><span class="s0">;</span>
+        <span class="s1">NavController navController = Navigation.findNavController(</span><span class="s0">this, </span><span class="s1">R.id.nav_host_fragment)</span><span class="s0">;</span>
+        <span class="s1">NavigationUI.setupActionBarWithNavController(</span><span class="s0">this, </span><span class="s1">navController</span><span class="s0">, </span><span class="s1">appBarConfiguration)</span><span class="s0">;</span>
+        <span class="s1">NavigationUI.setupWithNavController(navView</span><span class="s0">, </span><span class="s1">navController)</span><span class="s0">;</span>
+
+
+        <span class="s1">setLocation()</span><span class="s0">;</span>
+        <span class="s1">getPendingIntent()</span><span class="s0">;</span>
+
+
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">setLocation() {</span>
+        <span class="s1">getPendingIntent()</span><span class="s0">;</span>
+        <span class="s1">SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()</span>
+                <span class="s1">.findFragmentById(R.id.mapHome)</span><span class="s0">;</span>
+        <span class="s1">mapFragment.getMapAsync(</span><span class="s0">new </span><span class="s1">OnMapReadyCallback() {</span>
+            <span class="s1">@Override</span>
+            <span class="s0">public void </span><span class="s1">onMapReady(GoogleMap googleMap) {</span>
+                <span class="s1">mMap = googleMap</span><span class="s0">;</span>
+                <span class="s3">//////////////////////////////////////</span>
+                <span class="s1">mMap.getUiSettings().setZoomControlsEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+
+                <span class="s3">// Add a marker in Sydney and move the camera</span>
+                <span class="s1">LatLng eiffel = </span><span class="s0">new </span><span class="s1">LatLng(</span><span class="s2">48.8589</span><span class="s0">, </span><span class="s2">2.29365</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(eiffel</span><span class="s0">, </span><span class="s2">16</span><span class="s1">))</span><span class="s0">;</span>
+                <span class="s1">mMap.getUiSettings().setZoomControlsEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s3">/////////////////////////////////////////</span>
+              <span class="s3">//  enableUserLocation();</span>
+            <span class="s1">}</span>
+        <span class="s1">})</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onStart() {</span>
+        <span class="s0">super</span><span class="s1">.onStart()</span><span class="s0">;</span>
+        <span class="s0">if</span><span class="s1">(firebaseAuth.getCurrentUser() == </span><span class="s0">null</span><span class="s1">) {</span>
+            <span class="s1">finish()</span><span class="s0">;</span>
+            <span class="s1">startActivity(</span><span class="s0">new </span><span class="s1">Intent(getApplicationContext()</span><span class="s0">, </span><span class="s1">LoginPageActivity.</span><span class="s0">class</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+
+    <span class="s0">public </span><span class="s1">PendingIntent getPendingIntent() {</span>
+        <span class="s0">if </span><span class="s1">(pendingIntent != </span><span class="s0">null</span><span class="s1">) {</span>
+            <span class="s0">return </span><span class="s1">pendingIntent</span><span class="s0">;</span>
+        <span class="s1">}</span>
+        <span class="s1">Intent intent = </span><span class="s0">new </span><span class="s1">Intent(</span><span class="s0">this, </span><span class="s1">GeofenceBroadcastReceiver.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">pendingIntent = PendingIntent.getBroadcast(</span><span class="s0">this, </span><span class="s2">2607</span><span class="s0">, </span><span class="s1">intent</span><span class="s0">, </span><span class="s1">PendingIntent.FLAG_UPDATE_CURRENT)</span><span class="s0">;</span>
+
+        <span class="s0">return </span><span class="s1">pendingIntent</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+
+  <span class="s3">/*  private void enableUserLocation() { 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) { 
+            mMap.setMyLocationEnabled(true); 
+        } else { 
+            //Ask for permission 
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) { 
+                //We need to show user a dialog for displaying why the permission is needed and then ask for the permission... 
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, FINE_LOCATION_ACCESS_REQUEST_CODE); 
+            } else { 
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, FINE_LOCATION_ACCESS_REQUEST_CODE); 
+            } 
+        } 
+    } 
+*/</span>
+<span class="s1">}</span></pre>
+</body>
+</html>

@@ -1,0 +1,207 @@
+<html>
+<head>
+<title>BranchDetailsFragment.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #629755; font-style: italic;}
+.s3 { color: #629755; font-weight: bold; font-style: italic;}
+.s4 { color: #808080;}
+.s5 { color: #6a8759;}
+.s6 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+BranchDetailsFragment.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.myapplication.activities.customer.ui.home</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.util.Log</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.KeyEvent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.LayoutInflater</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.ViewGroup</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Button</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.TextView</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">androidx.fragment.app.Fragment</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.example.myapplication.R</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.myapplication.objects.Branch</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.myapplication.objects.Queue</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.auth.FirebaseAuth</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.database.DatabaseReference</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.database.FirebaseDatabase</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.util.HashMap</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Map</span><span class="s0">;</span>
+
+<span class="s0">import static </span><span class="s1">com.example.myapplication.activities.MainLoadingPage.BRANCH_CLASS</span><span class="s0">;</span>
+<span class="s0">import static </span><span class="s1">com.example.myapplication.activities.MainLoadingPage.QUEUE1</span><span class="s0">;</span>
+<span class="s0">import static </span><span class="s1">com.example.myapplication.activities.MainLoadingPage.QUEUE2</span><span class="s0">;</span>
+
+<span class="s2">/**</span>
+ <span class="s2">* A simple {</span><span class="s3">@link </span><span class="s2">Fragment} subclass.</span>
+ <span class="s2">* Use the {</span><span class="s3">@link </span><span class="s2">BranchDetailsFragment#newInstance} factory method to</span>
+ <span class="s2">* create an instance of this fragment.</span>
+ <span class="s2">*/</span>
+<span class="s0">public class </span><span class="s1">BranchDetailsFragment </span><span class="s0">extends </span><span class="s1">Fragment {</span>
+
+    <span class="s1">FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance()</span><span class="s0">;</span>
+    <span class="s1">DatabaseReference rootRef = firebaseDatabase.getReference()</span><span class="s0">;</span>
+    <span class="s1">FirebaseAuth firebaseAuth = FirebaseAuth.getInstance()</span><span class="s0">;</span>
+    <span class="s1">Button queueOne</span><span class="s0">;</span>
+    <span class="s1">Button queueTwo</span><span class="s0">;</span>
+    <span class="s1">View root</span><span class="s0">;</span>
+    <span class="s1">Branch branch</span><span class="s0">;</span>
+    <span class="s4">// TODO: Rename parameter arguments, choose names that match</span>
+    <span class="s4">// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER</span>
+    <span class="s0">private static final </span><span class="s1">String ARG_PARAM1 = </span><span class="s5">&quot;param1&quot;</span><span class="s0">;</span>
+    <span class="s0">private static final </span><span class="s1">String ARG_PARAM2 = </span><span class="s5">&quot;param2&quot;</span><span class="s0">;</span>
+
+    <span class="s4">// TODO: Rename and change types of parameters</span>
+    <span class="s0">private </span><span class="s1">String mParam1</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String mParam2</span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">BranchDetailsFragment() {</span>
+        <span class="s4">// Required empty public constructor</span>
+    <span class="s1">}</span>
+
+    <span class="s2">/**</span>
+     <span class="s2">* Use this factory method to create a new instance of</span>
+     <span class="s2">* this fragment using the provided parameters.</span>
+     <span class="s2">*</span>
+     <span class="s2">* </span><span class="s3">@param </span><span class="s2">param1 Parameter 1.</span>
+     <span class="s2">* </span><span class="s3">@param </span><span class="s2">param2 Parameter 2.</span>
+     <span class="s2">* </span><span class="s3">@return </span><span class="s2">A new instance of fragment branchDetailsFragment.</span>
+     <span class="s2">*/</span>
+    <span class="s4">// TODO: Rename and change types and number of parameters</span>
+    <span class="s0">public static </span><span class="s1">BranchDetailsFragment newInstance(String param1</span><span class="s0">, </span><span class="s1">String param2) {</span>
+        <span class="s1">BranchDetailsFragment fragment = </span><span class="s0">new </span><span class="s1">BranchDetailsFragment()</span><span class="s0">;</span>
+        <span class="s1">Bundle args = </span><span class="s0">new </span><span class="s1">Bundle()</span><span class="s0">;</span>
+        <span class="s1">args.putString(ARG_PARAM1</span><span class="s0">, </span><span class="s1">param1)</span><span class="s0">;</span>
+        <span class="s1">args.putString(ARG_PARAM2</span><span class="s0">, </span><span class="s1">param2)</span><span class="s0">;</span>
+        <span class="s1">fragment.setArguments(args)</span><span class="s0">;</span>
+        <span class="s0">return </span><span class="s1">fragment</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">onCreate(Bundle savedInstanceState) {</span>
+        <span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span>
+        <span class="s0">if </span><span class="s1">(getArguments() != </span><span class="s0">null</span><span class="s1">) {</span>
+            <span class="s1">mParam1 = getArguments().getString(ARG_PARAM1)</span><span class="s0">;</span>
+            <span class="s1">mParam2 = getArguments().getString(ARG_PARAM2)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+
+<span class="s4">// This callback will only be called when MyFragment is at least Started.</span>
+<span class="s4">//        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {</span>
+<span class="s4">//            @Override</span>
+<span class="s4">//            public void handleOnBackPressed() {</span>
+<span class="s4">//                // Handle the back button event</span>
+<span class="s4">//                getParentFragmentManager()</span>
+<span class="s4">//                        .beginTransaction()</span>
+<span class="s4">//                        .replace(R.id.nav_host_fragment,new HomeFragment())</span>
+<span class="s4">//                        .commit();</span>
+<span class="s4">//            }</span>
+<span class="s4">//        };</span>
+<span class="s4">//        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);</span>
+
+    <span class="s1">}</span>
+
+    <span class="s4">/*@Override 
+    public void onDestroy() { 
+        super.onDestroy(); 
+        Log.d(&quot;*****&quot;,&quot;onDestroy&quot;); 
+        if(getParentFragmentManager().getBackStackEntryCount() != 0) 
+            getParentFragmentManager().popBackStack(); 
+ 
+ 
+    }*/</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public </span><span class="s1">View onCreateView(LayoutInflater inflater</span><span class="s0">, </span><span class="s1">ViewGroup container</span><span class="s0">,</span>
+                             <span class="s1">Bundle savedInstanceState) {</span>
+        <span class="s4">// Inflate the layout for this fragment</span>
+
+        <span class="s1">root = inflater.inflate(R.layout.fragment_branch_details</span><span class="s0">, </span><span class="s1">container</span><span class="s0">, false</span><span class="s1">)</span><span class="s0">;</span>
+
+        <span class="s1">Bundle bundle = </span><span class="s0">this</span><span class="s1">.getArguments()</span><span class="s0">;</span>
+        <span class="s1">branch = (Branch) bundle.getSerializable(BRANCH_CLASS)</span><span class="s0">;</span>
+
+        <span class="s1">TextView branchName = root.findViewById(R.id.branch_name_customer_detail)</span><span class="s0">;</span>
+
+        <span class="s1">setQueueButtons()</span><span class="s0">;</span>
+
+
+
+        <span class="s1">branchName.setText(branch.getBranchName())</span><span class="s0">;</span>
+        <span class="s1">queueOne.setText(branch.getQueue1().getQueueName())</span><span class="s0">;</span>
+        <span class="s0">if</span><span class="s1">(branch.getNumberOfQueues()==</span><span class="s6">2</span><span class="s1">) {</span>
+            <span class="s1">queueTwo.setVisibility(View.VISIBLE)</span><span class="s0">;</span>
+            <span class="s1">queueTwo.setText(branch.getQueue2().getQueueName())</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+        <span class="s4">//control back button</span>
+        <span class="s4">/*root.setFocusableInTouchMode(true); 
+        root.requestFocus(); 
+        root.setOnKeyListener( new View.OnKeyListener() 
+        { 
+            @Override 
+            public boolean onKey( View v, int keyCode, KeyEvent event ) 
+            { 
+                if( keyCode == KeyEvent.KEYCODE_BACK ) 
+                { 
+                    getParentFragmentManager() 
+                            .beginTransaction() 
+                            .remove(BranchDetailsFragment.this) 
+                            .commit(); 
+                    return true; 
+                } 
+                return false; 
+            } 
+        } );*/</span>
+
+        <span class="s0">return </span><span class="s1">root</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">setQueueButtons() {</span>
+        <span class="s1">queueOne = root.findViewById(R.id.queue_one_customer)</span><span class="s0">;</span>
+        <span class="s1">queueTwo = root.findViewById(R.id.queue_two_customer)</span><span class="s0">;</span>
+
+        <span class="s1">queueOne.setOnClickListener(t-&gt; addQueueToDatabase(QUEUE1))</span><span class="s0">;</span>
+
+        <span class="s0">if</span><span class="s1">(branch.getNumberOfQueues()==</span><span class="s6">2</span><span class="s1">)</span>
+            <span class="s1">queueTwo.setOnClickListener(t-&gt; addQueueToDatabase(QUEUE2))</span><span class="s0">;</span>
+        <span class="s1">Log.d(</span><span class="s5">&quot;****&quot;</span><span class="s0">,</span><span class="s1">String.valueOf(branch.getNumberOfQueues()))</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">addQueueToDatabase(String queueNumber) {</span>
+        <span class="s1">Map&lt;String</span><span class="s0">, </span><span class="s1">Object&gt; map = </span><span class="s0">new </span><span class="s1">HashMap&lt;&gt;()</span><span class="s0">;</span>
+        <span class="s1">Queue queue = </span><span class="s0">new </span><span class="s1">Queue()</span><span class="s0">;</span>
+        <span class="s0">if</span><span class="s1">(queueNumber.equals(QUEUE1))</span>
+            <span class="s1">queue = branch.getQueue1()</span><span class="s0">;</span>
+        <span class="s0">else if</span><span class="s1">(queueNumber.equals(QUEUE2))</span>
+            <span class="s1">queue = branch.getQueue2()</span><span class="s0">;</span>
+
+<span class="s4">//        map.put(String.valueOf(queue.getCustomerListUpdates().size()), firebaseAuth.getUid());</span>
+<span class="s4">//        rootRef.child(BRANCH).child(branch.getBranchID()).child(queueNumber).child(CUSTOMER_ID_LIST).orderByKey()</span>
+<span class="s4">//                .equalTo(firebaseAuth.getUid()).get()</span>
+<span class="s4">//                .addOnSuccessListener(t2-&gt; {</span>
+<span class="s4">//                    if(t2.getValue()==null) {</span>
+<span class="s4">//                        rootRef.child(BRANCH).child(branch.getBranchID()).child(queueNumber).child(CUSTOMER_ID_LIST).updateChildren(map);</span>
+<span class="s4">//                        Toast.makeText(getContext(),&quot;Added in queue&quot;,Toast.LENGTH_SHORT).show();</span>
+<span class="s4">//                    }else</span>
+<span class="s4">//                        Toast.makeText(getContext(),&quot;You are in the queue&quot;,Toast.LENGTH_SHORT).show();</span>
+<span class="s4">//                });</span>
+    <span class="s1">}</span>
+
+
+<span class="s1">}</span></pre>
+</body>
+</html>

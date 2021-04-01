@@ -1,0 +1,123 @@
+<html>
+<head>
+<title>Queue.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #808080;}
+.s3 { color: #6a8759;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+Queue.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.myapplication.objects</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.google.firebase.database.DatabaseReference</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.database.FirebaseDatabase</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.io.Serializable</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.ArrayList</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.HashMap</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.LinkedList</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.List</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">java.util.Map</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">Queue </span><span class="s0">implements </span><span class="s1">Serializable {</span>
+    <span class="s0">private </span><span class="s1">String QueueID</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String BranchID</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String QueueName</span><span class="s0">;</span>
+    <span class="s0">private boolean </span><span class="s1">QueueStatus</span><span class="s0">;</span>
+<span class="s2">//    private Map&lt;String, Object&gt; customerListUpdates = new HashMap&lt;&gt;();</span>
+<span class="s2">// فيه ميثود جديدة اضفتها هي ResetQueue</span>
+    <span class="s2">// الميثودات Edit and Delete ماراح نسويها الحين</span>
+
+    <span class="s1">FirebaseDatabase Root</span><span class="s0">;</span>
+    <span class="s1">DatabaseReference RootReference </span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">Queue(String queueId1</span><span class="s0">, </span><span class="s1">String branchId</span><span class="s0">, </span><span class="s1">String adminE</span><span class="s0">, </span><span class="s1">String adminPa</span><span class="s0">, </span><span class="s1">String s){</span>
+
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">Queue(String queueID</span><span class="s0">, </span><span class="s1">String branchId </span><span class="s0">, </span><span class="s1">String queueName) {</span>
+        <span class="s1">QueueID = queueID</span><span class="s0">;</span>
+        <span class="s1">BranchID = branchId</span><span class="s0">;</span>
+        <span class="s1">QueueName = queueName</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+
+
+    <span class="s0">public </span><span class="s1">String getQueueID() {</span>
+        <span class="s0">return </span><span class="s1">QueueID</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getBranchID() {</span>
+        <span class="s0">return </span><span class="s1">BranchID</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public </span><span class="s1">String getQueueName() {</span>
+        <span class="s0">return </span><span class="s1">QueueName</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+    <span class="s0">public boolean </span><span class="s1">getQueueStatus() {</span>
+        <span class="s0">return </span><span class="s1">QueueStatus</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setQueueID(String queueID) {</span>
+        <span class="s1">QueueID = queueID</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setBranchID(String branchID) {</span>
+        <span class="s1">BranchID = branchID</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setQueueName(String queueName) {</span>
+        <span class="s1">QueueName = queueName</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">setQueueStatus(</span><span class="s0">boolean </span><span class="s1">queueStatus) {</span>
+        <span class="s1">QueueStatus = queueStatus</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">add(Queue NewQueue){</span>
+        <span class="s1">NewQueue.setQueueStatus(</span><span class="s0">false</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">Root = FirebaseDatabase.getInstance()</span><span class="s0">;</span>
+        <span class="s1">RootReference = Root.getReference(</span><span class="s3">&quot;Queue&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">RootReference.child(String.valueOf(NewQueue.BranchID)).setValue(NewQueue)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s2">// Start()...</span>
+
+    <span class="s0">public void </span><span class="s1">resumeQueue(</span><span class="s0">int </span><span class="s1">FK){</span>
+        <span class="s1">HashMap hash = </span><span class="s0">new </span><span class="s1">HashMap()</span><span class="s0">;</span>
+        <span class="s1">hash.put(</span><span class="s3">&quot;QueueStatus&quot;</span><span class="s0">,</span><span class="s3">&quot;true&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">RootReference = FirebaseDatabase.getInstance().getReference().child(String.valueOf(FK))</span><span class="s0">;</span>
+        <span class="s1">RootReference.updateChildren(hash)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">StopQueue(</span><span class="s0">int </span><span class="s1">FK){</span>
+        <span class="s1">HashMap hash = </span><span class="s0">new </span><span class="s1">HashMap()</span><span class="s0">;</span>
+        <span class="s1">hash.put(</span><span class="s3">&quot;QueueStatus&quot;</span><span class="s0">,</span><span class="s3">&quot;false&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">RootReference = FirebaseDatabase.getInstance().getReference().child(String.valueOf(FK))</span><span class="s0">;</span>
+        <span class="s1">RootReference.updateChildren(hash)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+<span class="s2">//</span>
+<span class="s2">//    public Map&lt;String, Object&gt; getCustomerListUpdates() {</span>
+<span class="s2">//        return customerListUpdates;</span>
+<span class="s2">//    }</span>
+<span class="s2">//</span>
+<span class="s2">//    public void setCustomerListUpdates(Map&lt;String, Object&gt; customerListUpdates) {</span>
+<span class="s2">//        this.customerListUpdates = customerListUpdates;</span>
+<span class="s2">//    }</span>
+
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

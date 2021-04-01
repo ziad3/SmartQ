@@ -1,0 +1,227 @@
+<html>
+<head>
+<title>AndroidManifest.xml</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #e8bf6a;}
+.s1 { color: #bababa;}
+.s2 { color: #6a8759;}
+.s3 { color: #a9b7c6;}
+.s4 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+AndroidManifest.xml</font>
+</center></td></tr></table>
+<pre><span class="s0">&lt;?</span><span class="s1">xml version</span><span class="s2">=&quot;1.0&quot; </span><span class="s1">encoding</span><span class="s2">=&quot;utf-8&quot;</span><span class="s0">?&gt;</span>
+<span class="s0">&lt;manifest </span><span class="s1">xmlns:android</span><span class="s2">=&quot;http://schemas.android.com/apk/res/android&quot;</span>
+    <span class="s1">package</span><span class="s2">=&quot;com.example.myapplication&quot;</span>
+    <span class="s1">android:versionCode</span><span class="s2">=&quot;1&quot;</span>
+    <span class="s1">android:versionName</span><span class="s2">=&quot;1.0&quot; </span><span class="s0">&gt;</span>
+
+    <span class="s0">&lt;uses-sdk</span>
+        <span class="s1">android:minSdkVersion</span><span class="s2">=&quot;21&quot;</span>
+        <span class="s1">android:targetSdkVersion</span><span class="s2">=&quot;30&quot; </span><span class="s0">/&gt;</span>
+
+    <span class="s4">&lt;!--</span>
+         <span class="s4">The ACCESS_COARSE/FINE_LOCATION permissions are not required to use 
+         Google Maps Android API v2, but you must specify either coarse or fine 
+         location permissions for the &quot;MyLocation&quot; functionality. 
+    --&gt;</span>
+    <span class="s0">&lt;uses-permission </span><span class="s1">android:name</span><span class="s2">=&quot;android.permission.ACCESS_FINE_LOCATION&quot; </span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;uses-permission </span><span class="s1">android:name</span><span class="s2">=&quot;android.permission.ACCESS_NETWORK_STATE&quot; </span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;uses-permission </span><span class="s1">android:name</span><span class="s2">=&quot;android.permission.ACCESS_BACKGROUND_LOCATION&quot; </span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;uses-permission </span><span class="s1">android:name</span><span class="s2">=&quot;android.permission.INTERNET&quot; </span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;uses-permission </span><span class="s1">android:name</span><span class="s2">=&quot;android.permission.WAKE_LOCK&quot; </span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;uses-permission </span><span class="s1">android:name</span><span class="s2">=&quot;android.permission.WAKE_LOCK&quot; </span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;uses-permission </span><span class="s1">android:name</span><span class="s2">=&quot;android.permission.WRITE_EXTERNAL_STORAGE&quot; </span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;uses-permission </span><span class="s1">android:name</span><span class="s2">=&quot;com.google.android.providers.gsf.permission.READ_GSERVICES&quot; </span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;uses-permission </span><span class="s1">android:name</span><span class="s2">=&quot;android.permission.ACCESS_COARSE_LOCATION&quot; </span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;uses-permission </span><span class="s1">android:name</span><span class="s2">=&quot;package_name.permission.MAPS_RECEIVE&quot; </span><span class="s0">/&gt;</span>
+
+    <span class="s0">&lt;uses-feature</span>
+        <span class="s1">android:glEsVersion</span><span class="s2">=&quot;0x00020000&quot;</span>
+        <span class="s1">android:required</span><span class="s2">=&quot;true&quot; </span><span class="s0">/&gt;</span>
+
+    <span class="s0">&lt;uses-permission </span><span class="s1">android:name</span><span class="s2">=&quot;com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE&quot; </span><span class="s0">/&gt;</span>
+
+    <span class="s0">&lt;application</span>
+        <span class="s1">android:allowBackup</span><span class="s2">=&quot;true&quot;</span>
+        <span class="s1">android:appComponentFactory</span><span class="s2">=&quot;androidx.core.app.CoreComponentFactory&quot;</span>
+        <span class="s1">android:debuggable</span><span class="s2">=&quot;true&quot;</span>
+        <span class="s1">android:icon</span><span class="s2">=&quot;@mipmap/ic_launcher&quot;</span>
+        <span class="s1">android:label</span><span class="s2">=&quot;@string/app_name&quot;</span>
+        <span class="s1">android:roundIcon</span><span class="s2">=&quot;@mipmap/ic_launcher_round&quot;</span>
+        <span class="s1">android:supportsRtl</span><span class="s2">=&quot;true&quot;</span>
+        <span class="s1">android:testOnly</span><span class="s2">=&quot;true&quot;</span>
+        <span class="s1">android:theme</span><span class="s2">=&quot;@style/Theme.MyApplication&quot;</span>
+        <span class="s1">android:usesCleartextTraffic</span><span class="s2">=&quot;true&quot; </span><span class="s0">&gt;</span>
+
+        <span class="s4">&lt;!--</span>
+             <span class="s4">The API key for Google Maps-based APIs is defined as a string resource. 
+             (See the file &quot;res/values/google_maps_api.xml&quot;). 
+             Note that the API key is linked to the encryption key used to sign the APK. 
+             You need a different API key for each encryption key, including the release key that is used to 
+             sign the APK for publishing. 
+             You can define the keys for the debug and release targets in src/debug/ and src/release/. 
+        --&gt;</span>
+        <span class="s0">&lt;meta-data</span>
+            <span class="s1">android:name</span><span class="s2">=&quot;com.google.android.geo.API_KEY&quot;</span>
+            <span class="s1">android:value</span><span class="s2">=&quot;@string/google_maps_key&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s0">&lt;activity</span>
+            <span class="s1">android:name</span><span class="s2">=&quot;com.example.myapplication.activities.customer.CustomerInterfaceActivity&quot;</span>
+            <span class="s1">android:label</span><span class="s2">=&quot;@string/title_activity_customer_branch_list&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s0">&lt;receiver</span>
+            <span class="s1">android:name</span><span class="s2">=&quot;com.example.myapplication.activities.GeofenceBroadcastReceiver&quot;</span>
+            <span class="s1">android:enabled</span><span class="s2">=&quot;true&quot;</span>
+            <span class="s1">android:exported</span><span class="s2">=&quot;true&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s0">&lt;activity</span>
+            <span class="s1">android:name</span><span class="s2">=&quot;com.example.myapplication.activities.company.EditMapsActivity&quot;</span>
+            <span class="s1">android:label</span><span class="s2">=&quot;@string/title_activity_maps2&quot; </span><span class="s0">/&gt;</span>
+        <span class="s4">&lt;!-- &lt;activity --&gt;</span>
+        <span class="s4">&lt;!-- android:name=&quot;.activities.MapsActivity&quot; --&gt;</span>
+        <span class="s4">&lt;!-- android:label=&quot;@string/title_activity_maps&quot; /&gt; --&gt;</span>
+        <span class="s0">&lt;activity </span><span class="s1">android:name</span><span class="s2">=&quot;com.example.myapplication.activities.ResetPassword&quot; </span><span class="s0">/&gt;</span>
+        <span class="s0">&lt;activity </span><span class="s1">android:name</span><span class="s2">=&quot;com.example.myapplication.activities.RegisterCompanyActivity&quot; </span><span class="s0">/&gt;</span>
+        <span class="s0">&lt;activity </span><span class="s1">android:name</span><span class="s2">=&quot;com.example.myapplication.activities.company.TicketPageActivity&quot; </span><span class="s0">/&gt;</span>
+        <span class="s0">&lt;activity </span><span class="s1">android:name</span><span class="s2">=&quot;com.example.myapplication.activities.company.RestaurantPage&quot; </span><span class="s0">/&gt;</span>
+        <span class="s0">&lt;activity </span><span class="s1">android:name</span><span class="s2">=&quot;com.example.myapplication.activities.ListPageActivity&quot; </span><span class="s0">/&gt;</span>
+        <span class="s0">&lt;activity </span><span class="s1">android:name</span><span class="s2">=&quot;com.example.myapplication.activities.RegisterCustomerActivity&quot; </span><span class="s0">/&gt;</span>
+        <span class="s0">&lt;activity </span><span class="s1">android:name</span><span class="s2">=&quot;com.example.myapplication.activities.LoginPageActivity&quot; </span><span class="s0">/&gt;</span>
+        <span class="s0">&lt;activity </span><span class="s1">android:name</span><span class="s2">=&quot;com.example.myapplication.activities.MainLoadingPage&quot; </span><span class="s0">&gt;</span>
+            <span class="s0">&lt;intent-filter&gt;</span>
+                <span class="s0">&lt;action </span><span class="s1">android:name</span><span class="s2">=&quot;android.intent.action.MAIN&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;category </span><span class="s1">android:name</span><span class="s2">=&quot;android.intent.category.LAUNCHER&quot; </span><span class="s0">/&gt;</span>
+            <span class="s0">&lt;/intent-filter&gt;</span>
+        <span class="s0">&lt;/activity&gt;</span>
+        <span class="s0">&lt;activity </span><span class="s1">android:name</span><span class="s2">=&quot;com.example.myapplication.activities.company.EditBranchActivity&quot; </span><span class="s0">/&gt;</span>
+        <span class="s0">&lt;activity </span><span class="s1">android:name</span><span class="s2">=&quot;com.example.myapplication.activities.company.AddBranchActivity&quot; </span><span class="s0">/&gt;</span>
+        <span class="s0">&lt;activity </span><span class="s1">android:name</span><span class="s2">=&quot;com.example.myapplication.activities.Dialog&quot; </span><span class="s0">/&gt;</span>
+        <span class="s0">&lt;activity </span><span class="s1">android:name</span><span class="s2">=&quot;com.example.myapplication.activities.BranchDetails&quot; </span><span class="s0">/&gt;</span>
+        <span class="s0">&lt;activity </span><span class="s1">android:name</span><span class="s2">=&quot;com.example.myapplication.activities.company.CompanyBranchesActivity&quot; </span><span class="s0">/&gt;</span>
+        <span class="s0">&lt;activity </span><span class="s1">android:name</span><span class="s2">=&quot;com.example.myapplication.activities.admin.Admin_Activity&quot; </span><span class="s0">/&gt;</span>
+        <span class="s0">&lt;activity </span><span class="s1">android:name</span><span class="s2">=&quot;com.example.myapplication.activities.admin.CompanyControl&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s0">&lt;service</span>
+            <span class="s1">android:name</span><span class="s2">=&quot;com.google.firebase.components.ComponentDiscoveryService&quot;</span>
+            <span class="s1">android:directBootAware</span><span class="s2">=&quot;true&quot;</span>
+            <span class="s1">android:exported</span><span class="s2">=&quot;false&quot; </span><span class="s0">&gt;</span>
+            <span class="s0">&lt;meta-data</span>
+                <span class="s1">android:name</span><span class="s2">=&quot;com.google.firebase.components:com.google.firebase.database.DatabaseRegistrar&quot;</span>
+                <span class="s1">android:value</span><span class="s2">=&quot;com.google.firebase.components.ComponentRegistrar&quot; </span><span class="s0">/&gt;</span>
+            <span class="s0">&lt;meta-data</span>
+                <span class="s1">android:name</span><span class="s2">=&quot;com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar&quot;</span>
+                <span class="s1">android:value</span><span class="s2">=&quot;com.google.firebase.components.ComponentRegistrar&quot; </span><span class="s0">/&gt;</span>
+            <span class="s0">&lt;meta-data</span>
+                <span class="s1">android:name</span><span class="s2">=&quot;com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar&quot;</span>
+                <span class="s1">android:value</span><span class="s2">=&quot;com.google.firebase.components.ComponentRegistrar&quot; </span><span class="s0">/&gt;</span>
+            <span class="s0">&lt;meta-data</span>
+                <span class="s1">android:name</span><span class="s2">=&quot;com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar&quot;</span>
+                <span class="s1">android:value</span><span class="s2">=&quot;com.google.firebase.components.ComponentRegistrar&quot; </span><span class="s0">/&gt;</span>
+            <span class="s4">&lt;!--</span>
+                <span class="s4">This registrar is not defined in the dynamic-module-support sdk itself to allow non-firebase 
+                clients to use it as well, by defining this registrar in their own core/common library. 
+            --&gt;</span>
+            <span class="s0">&lt;meta-data</span>
+                <span class="s1">android:name</span><span class="s2">=&quot;com.google.firebase.components:com.google.firebase.dynamicloading.DynamicLoadingRegistrar&quot;</span>
+                <span class="s1">android:value</span><span class="s2">=&quot;com.google.firebase.components.ComponentRegistrar&quot; </span><span class="s0">/&gt;</span>
+        <span class="s0">&lt;/service&gt;</span>
+
+        <span class="s0">&lt;activity</span>
+            <span class="s1">android:name</span><span class="s2">=&quot;com.google.firebase.auth.internal.GenericIdpActivity&quot;</span>
+            <span class="s1">android:excludeFromRecents</span><span class="s2">=&quot;true&quot;</span>
+            <span class="s1">android:exported</span><span class="s2">=&quot;true&quot;</span>
+            <span class="s1">android:launchMode</span><span class="s2">=&quot;singleTask&quot;</span>
+            <span class="s1">android:theme</span><span class="s2">=&quot;@android:style/Theme.Translucent.NoTitleBar&quot; </span><span class="s0">&gt;</span>
+            <span class="s0">&lt;intent-filter&gt;</span>
+                <span class="s0">&lt;action </span><span class="s1">android:name</span><span class="s2">=&quot;android.intent.action.VIEW&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;category </span><span class="s1">android:name</span><span class="s2">=&quot;android.intent.category.DEFAULT&quot; </span><span class="s0">/&gt;</span>
+                <span class="s0">&lt;category </span><span class="s1">android:name</span><span class="s2">=&quot;android.intent.category.BROWSABLE&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;data</span>
+                    <span class="s1">android:host</span><span class="s2">=&quot;firebase.auth&quot;</span>
+                    <span class="s1">android:path</span><span class="s2">=&quot;/&quot;</span>
+                    <span class="s1">android:scheme</span><span class="s2">=&quot;genericidp&quot; </span><span class="s0">/&gt;</span>
+            <span class="s0">&lt;/intent-filter&gt;</span>
+        <span class="s0">&lt;/activity&gt;</span>
+        <span class="s0">&lt;activity</span>
+            <span class="s1">android:name</span><span class="s2">=&quot;com.google.firebase.auth.internal.RecaptchaActivity&quot;</span>
+            <span class="s1">android:excludeFromRecents</span><span class="s2">=&quot;true&quot;</span>
+            <span class="s1">android:exported</span><span class="s2">=&quot;true&quot;</span>
+            <span class="s1">android:launchMode</span><span class="s2">=&quot;singleTask&quot;</span>
+            <span class="s1">android:theme</span><span class="s2">=&quot;@android:style/Theme.Translucent.NoTitleBar&quot; </span><span class="s0">&gt;</span>
+            <span class="s0">&lt;intent-filter&gt;</span>
+                <span class="s0">&lt;action </span><span class="s1">android:name</span><span class="s2">=&quot;android.intent.action.VIEW&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;category </span><span class="s1">android:name</span><span class="s2">=&quot;android.intent.category.DEFAULT&quot; </span><span class="s0">/&gt;</span>
+                <span class="s0">&lt;category </span><span class="s1">android:name</span><span class="s2">=&quot;android.intent.category.BROWSABLE&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;data</span>
+                    <span class="s1">android:host</span><span class="s2">=&quot;firebase.auth&quot;</span>
+                    <span class="s1">android:path</span><span class="s2">=&quot;/&quot;</span>
+                    <span class="s1">android:scheme</span><span class="s2">=&quot;recaptcha&quot; </span><span class="s0">/&gt;</span>
+            <span class="s0">&lt;/intent-filter&gt;</span>
+        <span class="s0">&lt;/activity&gt;</span>
+
+        <span class="s0">&lt;service</span>
+            <span class="s1">android:name</span><span class="s2">=&quot;com.google.firebase.auth.api.fallback.service.FirebaseAuthFallbackService&quot;</span>
+            <span class="s1">android:enabled</span><span class="s2">=&quot;true&quot;</span>
+            <span class="s1">android:exported</span><span class="s2">=&quot;false&quot; </span><span class="s0">&gt;</span>
+            <span class="s0">&lt;intent-filter&gt;</span>
+                <span class="s0">&lt;action </span><span class="s1">android:name</span><span class="s2">=&quot;com.google.firebase.auth.api.gms.service.START&quot; </span><span class="s0">/&gt;</span>
+
+                <span class="s0">&lt;category </span><span class="s1">android:name</span><span class="s2">=&quot;android.intent.category.DEFAULT&quot; </span><span class="s0">/&gt;</span>
+            <span class="s0">&lt;/intent-filter&gt;</span>
+        <span class="s0">&lt;/service&gt;</span>
+
+        <span class="s0">&lt;activity</span>
+            <span class="s1">android:name</span><span class="s2">=&quot;com.karumi.dexter.DexterActivity&quot;</span>
+            <span class="s1">android:theme</span><span class="s2">=&quot;@style/Dexter.Internal.Theme.Transparent&quot; </span><span class="s0">/&gt; </span><span class="s4">&lt;!-- Needs to be explicitly declared on P+ --&gt;</span>
+        <span class="s0">&lt;uses-library</span>
+            <span class="s1">android:name</span><span class="s2">=&quot;org.apache.http.legacy&quot;</span>
+            <span class="s1">android:required</span><span class="s2">=&quot;false&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s0">&lt;activity</span>
+            <span class="s1">android:name</span><span class="s2">=&quot;com.google.android.gms.common.api.GoogleApiActivity&quot;</span>
+            <span class="s1">android:exported</span><span class="s2">=&quot;false&quot;</span>
+            <span class="s1">android:theme</span><span class="s2">=&quot;@android:style/Theme.Translucent.NoTitleBar&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s0">&lt;receiver</span>
+            <span class="s1">android:name</span><span class="s2">=&quot;com.google.android.gms.measurement.AppMeasurementReceiver&quot;</span>
+            <span class="s1">android:enabled</span><span class="s2">=&quot;true&quot;</span>
+            <span class="s1">android:exported</span><span class="s2">=&quot;false&quot; </span><span class="s0">&gt;</span>
+        <span class="s0">&lt;/receiver&gt;</span>
+
+        <span class="s0">&lt;service</span>
+            <span class="s1">android:name</span><span class="s2">=&quot;com.google.android.gms.measurement.AppMeasurementService&quot;</span>
+            <span class="s1">android:enabled</span><span class="s2">=&quot;true&quot;</span>
+            <span class="s1">android:exported</span><span class="s2">=&quot;false&quot; </span><span class="s0">/&gt;</span>
+        <span class="s0">&lt;service</span>
+            <span class="s1">android:name</span><span class="s2">=&quot;com.google.android.gms.measurement.AppMeasurementJobService&quot;</span>
+            <span class="s1">android:enabled</span><span class="s2">=&quot;true&quot;</span>
+            <span class="s1">android:exported</span><span class="s2">=&quot;false&quot;</span>
+            <span class="s1">android:permission</span><span class="s2">=&quot;android.permission.BIND_JOB_SERVICE&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s0">&lt;provider</span>
+            <span class="s1">android:name</span><span class="s2">=&quot;com.google.firebase.provider.FirebaseInitProvider&quot;</span>
+            <span class="s1">android:authorities</span><span class="s2">=&quot;com.example.myapplication.firebaseinitprovider&quot;</span>
+            <span class="s1">android:directBootAware</span><span class="s2">=&quot;true&quot;</span>
+            <span class="s1">android:exported</span><span class="s2">=&quot;false&quot;</span>
+            <span class="s1">android:initOrder</span><span class="s2">=&quot;100&quot; </span><span class="s0">/&gt;</span>
+
+        <span class="s0">&lt;meta-data</span>
+            <span class="s1">android:name</span><span class="s2">=&quot;com.google.android.gms.version&quot;</span>
+            <span class="s1">android:value</span><span class="s2">=&quot;@integer/google_play_services_version&quot; </span><span class="s0">/&gt;</span>
+    <span class="s0">&lt;/application&gt;</span>
+
+<span class="s0">&lt;/manifest&gt;</span></pre>
+</body>
+</html>

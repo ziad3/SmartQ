@@ -1,0 +1,87 @@
+<html>
+<head>
+<title>NotificationHelper.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+.s4 { color: #808080;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+NotificationHelper.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.myapplication.activities</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">android.app.Notification</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.app.NotificationChannel</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.app.NotificationManager</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.app.PendingIntent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.Context</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.ContextWrapper</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.graphics.Color</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.os.Build</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">androidx.annotation.RequiresApi</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.core.app.NotificationCompat</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.core.app.NotificationManagerCompat</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.example.myapplication.R</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.util.Random</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">NotificationHelper </span><span class="s0">extends </span><span class="s1">ContextWrapper {</span>
+
+    <span class="s0">private static final </span><span class="s1">String TAG = </span><span class="s2">&quot;NotificationHelper&quot;</span><span class="s0">;</span>
+
+    <span class="s0">public </span><span class="s1">NotificationHelper(Context base) {</span>
+        <span class="s0">super</span><span class="s1">(base)</span><span class="s0">;</span>
+        <span class="s0">if </span><span class="s1">(Build.VERSION.SDK_INT &gt;= Build.VERSION_CODES.O) {</span>
+            <span class="s1">createChannels()</span><span class="s0">;</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private </span><span class="s1">String CHANNEL_NAME = </span><span class="s2">&quot;High priority channel&quot;</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">String CHANNEL_ID = </span><span class="s2">&quot;com.example.notifications&quot; </span><span class="s1">+ CHANNEL_NAME</span><span class="s0">;</span>
+
+    <span class="s1">@RequiresApi(api = Build.VERSION_CODES.O)</span>
+    <span class="s0">private void </span><span class="s1">createChannels() {</span>
+        <span class="s1">NotificationChannel notificationChannel = </span><span class="s0">new </span><span class="s1">NotificationChannel(CHANNEL_ID</span><span class="s0">, </span><span class="s1">CHANNEL_NAME</span><span class="s0">, </span><span class="s1">NotificationManager.IMPORTANCE_HIGH)</span><span class="s0">;</span>
+        <span class="s1">notificationChannel.enableLights(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">notificationChannel.enableVibration(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">notificationChannel.setDescription(</span><span class="s2">&quot;this is the description of the channel.&quot;</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">notificationChannel.setLightColor(Color.RED)</span><span class="s0">;</span>
+        <span class="s1">notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PUBLIC)</span><span class="s0">;</span>
+        <span class="s1">NotificationManager manager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE)</span><span class="s0">;</span>
+        <span class="s1">manager.createNotificationChannel(notificationChannel)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">sendHighPriorityNotification(String title</span><span class="s0">, </span><span class="s1">String body</span><span class="s0">, </span><span class="s1">Class activityName) {</span>
+
+        <span class="s1">Intent intent = </span><span class="s0">new </span><span class="s1">Intent(</span><span class="s0">this, </span><span class="s1">activityName)</span><span class="s0">;</span>
+        <span class="s1">PendingIntent pendingIntent = PendingIntent.getActivity(</span><span class="s0">this, </span><span class="s3">267</span><span class="s0">, </span><span class="s1">intent</span><span class="s0">, </span><span class="s1">PendingIntent.FLAG_UPDATE_CURRENT)</span><span class="s0">;</span>
+
+        <span class="s1">Notification notification = </span><span class="s0">new </span><span class="s1">NotificationCompat.Builder(</span><span class="s0">this, </span><span class="s1">CHANNEL_ID)</span>
+<span class="s4">//                .setContentTitle(title)</span>
+<span class="s4">//                .setContentText(body)</span>
+                <span class="s1">.setSmallIcon(R.drawable.ic_launcher_background)</span>
+                <span class="s1">.setPriority(NotificationCompat.PRIORITY_HIGH)</span>
+                <span class="s1">.setStyle(</span><span class="s0">new </span><span class="s1">NotificationCompat.BigTextStyle().setSummaryText(</span><span class="s2">&quot;summary&quot;</span><span class="s1">).setBigContentTitle(title).bigText(body))</span>
+                <span class="s1">.setContentIntent(pendingIntent)</span>
+                <span class="s1">.setAutoCancel(</span><span class="s0">true</span><span class="s1">)</span>
+                <span class="s1">.build()</span><span class="s0">;</span>
+
+        <span class="s1">NotificationManagerCompat.from(</span><span class="s0">this</span><span class="s1">).notify(</span><span class="s0">new </span><span class="s1">Random().nextInt()</span><span class="s0">, </span><span class="s1">notification)</span><span class="s0">;</span>
+
+
+    <span class="s1">}</span>
+
+<span class="s1">}</span></pre>
+</body>
+</html>

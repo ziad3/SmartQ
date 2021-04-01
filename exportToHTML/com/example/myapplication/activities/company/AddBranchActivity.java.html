@@ -1,0 +1,191 @@
+<html>
+<head>
+<title>AddBranchActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #808080;}
+.s3 { color: #6897bb;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+AddBranchActivity.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.myapplication.activities.company</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">android.app.Activity</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.view.View</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Button</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.EditText</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.ImageButton</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.RadioGroup</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.RelativeLayout</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Toast</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">androidx.appcompat.app.AppCompatActivity</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.example.myapplication.R</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.myapplication.objects.Branch</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.myapplication.objects.Queue</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.auth.FirebaseAuth</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.database.DatabaseReference</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.database.FirebaseDatabase</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">java.util.Objects</span><span class="s0">;</span>
+
+<span class="s0">import static </span><span class="s1">com.example.myapplication.activities.MainLoadingPage.ADMINE</span><span class="s0">;</span>
+<span class="s0">import static </span><span class="s1">com.example.myapplication.activities.MainLoadingPage.ADMINP</span><span class="s0">;</span>
+<span class="s0">import static </span><span class="s1">com.example.myapplication.activities.MainLoadingPage.BRANCH</span><span class="s0">;</span>
+<span class="s0">import static </span><span class="s1">com.example.myapplication.activities.MainLoadingPage.LATITUDE</span><span class="s0">;</span>
+<span class="s0">import static </span><span class="s1">com.example.myapplication.activities.MainLoadingPage.LONGITUDE</span><span class="s0">;</span>
+<span class="s0">import static </span><span class="s1">com.example.myapplication.activities.MainLoadingPage.QUEUE</span><span class="s0">;</span>
+<span class="s0">import static </span><span class="s1">com.example.myapplication.activities.MainLoadingPage.RADIUS</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">AddBranchActivity </span><span class="s0">extends </span><span class="s1">AppCompatActivity {</span>
+
+    <span class="s1">FirebaseDatabase Root = FirebaseDatabase.getInstance()</span><span class="s0">;</span>
+    <span class="s1">DatabaseReference BranchReference = Root.getReference(BRANCH)</span><span class="s0">;</span>
+    <span class="s1">DatabaseReference QueueReference = Root.getReference(QUEUE)</span><span class="s0">;</span>
+    <span class="s1">DatabaseReference AdminEmReference = Root.getReference(ADMINE)</span><span class="s0">;</span>
+    <span class="s1">DatabaseReference AdminPaReference = Root.getReference(ADMINP)</span><span class="s0">;</span>
+
+
+    <span class="s1">FirebaseAuth firebaseAuth = FirebaseAuth.getInstance()</span><span class="s0">;</span>
+
+    <span class="s0">private </span><span class="s1">EditText branchName</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">EditText AdminEmail</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">EditText AdminPassword</span><span class="s0">;</span>
+    <span class="s0">private int </span><span class="s1">numberOfQueues</span><span class="s0">;</span>
+    <span class="s1">Button addBranch</span><span class="s0">;</span>
+    <span class="s1">Button cancelBranch</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">RelativeLayout progressBar</span><span class="s0">; </span><span class="s2">// to show the progress bar</span>
+    <span class="s0">private </span><span class="s1">String currentUserId</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">ImageButton locationIcon</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">RadioGroup radioGroupQueue</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">com.google.android.material.textfield.TextInputLayout SecondQueueNameLayout</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">com.google.android.material.textfield.TextInputEditText firstQueueName</span><span class="s0">;</span>
+    <span class="s0">private </span><span class="s1">com.google.android.material.textfield.TextInputEditText secondQueueName</span><span class="s0">;</span>
+    <span class="s0">int </span><span class="s1">LAUNCH_SECOND_ACTIVITY = </span><span class="s3">1</span><span class="s0">;</span>
+    <span class="s0">double </span><span class="s1">latitude = </span><span class="s3">0</span><span class="s0">;</span>
+    <span class="s0">double </span><span class="s1">longitude = </span><span class="s3">0</span><span class="s0">;</span>
+    <span class="s0">float </span><span class="s1">radius = </span><span class="s3">0</span><span class="s0">;</span>
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) {</span>
+        <span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span>
+        <span class="s1">setContentView(R.layout.activity_add_branch)</span><span class="s0">;</span>
+        <span class="s1">setTitle(getString(R.string.add_branch))</span><span class="s0">;</span>
+        <span class="s1">setupUIViews()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">public void </span><span class="s1">AddBranch() {</span>
+        <span class="s0">if</span><span class="s1">(isThereMissingValueInBranch()){</span>
+            <span class="s0">return;</span>
+        <span class="s1">}</span>
+
+        <span class="s1">String adminE = AdminEmReference.push().getKey()</span><span class="s0">;</span>
+        <span class="s1">String adminPa = AdminPaReference.push().getKey()</span><span class="s0">;</span>
+        <span class="s1">String branchId = BranchReference.push().getKey()</span><span class="s0">;</span>
+        <span class="s1">String queueId1 = QueueReference.push().getKey()</span><span class="s0">;</span>
+        <span class="s1">Queue queue1 = </span><span class="s0">new </span><span class="s1">Queue(queueId1</span><span class="s0">, </span><span class="s1">branchId</span><span class="s0">,</span><span class="s1">adminE</span><span class="s0">,</span><span class="s1">adminPa</span><span class="s0">, </span><span class="s1">firstQueueName.getText().toString())</span><span class="s0">;</span>
+        <span class="s1">Queue queue2 = </span><span class="s0">null;</span>
+<span class="s2">//        String queueId1 = QueueReference.push().getKey();</span>
+<span class="s2">//        QueueReference.child(queueId1).setValue(new Queue(queueId1, branchId, firstQueueName.getText().toString()));</span>
+
+        <span class="s0">if </span><span class="s1">(radioGroupQueue.getCheckedRadioButtonId() == R.id.radio_button_two_queue) {</span>
+            <span class="s1">String queueId2 = QueueReference.push().getKey()</span><span class="s0">;</span>
+            <span class="s1">queue2 = </span><span class="s0">new </span><span class="s1">Queue(queueId2</span><span class="s0">, </span><span class="s1">branchId</span><span class="s0">, </span><span class="s1">secondQueueName.getText().toString())</span><span class="s0">;</span>
+<span class="s2">//            QueueReference.child(queueId2).setValue(new Queue(queueId2, branchId, secondQueueName.getText().toString()));</span>
+        <span class="s1">}</span>
+
+
+        <span class="s1">currentUserId = Objects.requireNonNull(firebaseAuth.getCurrentUser()).getUid()</span><span class="s0">;</span>
+        <span class="s1">progressBar.setVisibility(View.VISIBLE)</span><span class="s0">;</span>
+
+        <span class="s1">Branch branch = </span><span class="s0">new </span><span class="s1">Branch(branchId</span><span class="s0">,</span><span class="s1">branchName.getText().toString()</span><span class="s0">,</span><span class="s1">latitude</span><span class="s0">,</span><span class="s1">longitude</span><span class="s0">,</span><span class="s1">radius</span><span class="s0">,</span><span class="s1">numberOfQueues</span><span class="s0">,</span><span class="s1">currentUserId</span><span class="s0">, </span><span class="s1">queue1</span><span class="s0">, </span><span class="s1">queue2)</span><span class="s0">;</span>
+        <span class="s1">BranchReference.child(branchId).setValue(branch)</span>
+                <span class="s1">.addOnCompleteListener(task -&gt; {progressBar.setVisibility(View.GONE)</span><span class="s0">; </span><span class="s1">finish()</span><span class="s0">;</span><span class="s1">})</span>
+                <span class="s1">.addOnSuccessListener(task -&gt; Toast.makeText(getApplicationContext()</span><span class="s0">,</span><span class="s1">R.string.branchAdded</span><span class="s0">,</span><span class="s1">Toast.LENGTH_LONG).show())</span>
+                <span class="s1">.addOnFailureListener(task -&gt; Toast.makeText(getApplicationContext()</span><span class="s0">,</span><span class="s1">R.string.cannotAddBranch</span><span class="s0">,</span><span class="s1">Toast.LENGTH_LONG).show())</span><span class="s0">;</span>
+
+
+
+
+
+
+    <span class="s1">}</span>
+
+    <span class="s0">private boolean </span><span class="s1">isThereMissingValueInBranch(){</span>
+            <span class="s0">if</span><span class="s1">(branchName.getText().toString().isEmpty()</span>
+                    <span class="s1">|| firstQueueName.getText().toString().isEmpty()</span>
+                    <span class="s1">|| (SecondQueueNameLayout.getVisibility() == View.VISIBLE &amp;&amp; secondQueueName.getText().toString().isEmpty())) {</span>
+                <span class="s1">Toast.makeText(getApplicationContext()</span><span class="s0">, </span><span class="s1">getString(R.string.pleaseFillAllFields) </span><span class="s0">, </span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span>
+                <span class="s0">return true;</span>
+            <span class="s1">}</span>
+            <span class="s0">if</span><span class="s1">(latitude == </span><span class="s3">0</span><span class="s1">){</span>
+                <span class="s1">Toast.makeText(getApplicationContext()</span><span class="s0">, </span><span class="s1">getString(R.string.please_choose_branch_location) </span><span class="s0">, </span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span>
+                <span class="s0">return true;</span>
+            <span class="s1">}</span>
+
+        <span class="s0">return false;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">setupUIViews(){</span>
+        <span class="s1">numberOfQueues = </span><span class="s3">1</span><span class="s0">;</span>
+        <span class="s1">progressBar = findViewById(R.id.loadingPanel_addBranch)</span><span class="s0">;</span>
+        <span class="s1">branchName = findViewById(R.id.branch_name_add_branch)</span><span class="s0">;</span>
+        <span class="s1">AdminEmail = findViewById(R.id.Admin_Email)</span><span class="s0">;</span>
+        <span class="s1">AdminPassword = findViewById(R.id.Admin_Password)</span><span class="s0">;</span>
+        <span class="s1">locationIcon = findViewById(R.id.location_icon_add_branch_image)</span><span class="s0">;</span>
+        <span class="s1">addBranch = findViewById(R.id.addBranch)</span><span class="s0">;</span>
+        <span class="s1">addBranch.setOnClickListener(t-&gt;AddBranch())</span><span class="s0">;</span>
+        <span class="s1">cancelBranch = findViewById(R.id.cancel_add_branch)</span><span class="s0">;</span>
+        <span class="s1">cancelBranch.setOnClickListener(t -&gt; finish())</span><span class="s0">;</span>
+        <span class="s1">SecondQueueNameLayout = findViewById(R.id.queue_two_name_layout)</span><span class="s0">;</span>
+        <span class="s1">firstQueueName = findViewById(R.id.queue_one_name)</span><span class="s0">;</span>
+        <span class="s1">secondQueueName = findViewById(R.id.queue_two_name)</span><span class="s0">;</span>
+        <span class="s1">radioGroupQueue = findViewById(R.id.radio_group_queue)</span><span class="s0">;</span>
+        <span class="s1">radioGroupQueue.setOnCheckedChangeListener((group</span><span class="s0">, </span><span class="s1">checkedId) -&gt; {</span>
+            <span class="s0">if</span><span class="s1">(checkedId == R.id.radio_button_two_queue) {</span>
+                <span class="s1">SecondQueueNameLayout.setVisibility(View.VISIBLE)</span><span class="s0">;</span>
+                <span class="s1">numberOfQueues = </span><span class="s3">2</span><span class="s0">;</span>
+            <span class="s1">}</span>
+            <span class="s0">else </span><span class="s1">{</span>
+                <span class="s1">SecondQueueNameLayout.setVisibility(View.GONE)</span><span class="s0">;</span>
+                <span class="s1">numberOfQueues = </span><span class="s3">1</span><span class="s0">;</span>
+                <span class="s1">secondQueueName.setText(</span><span class="s0">null</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">})</span><span class="s0">;</span>
+        <span class="s1">locationIcon.setOnClickListener(t -&gt; {</span>
+            <span class="s1">Intent intent = </span><span class="s0">new </span><span class="s1">Intent(getApplicationContext()</span><span class="s0">, </span><span class="s1">EditMapsActivity.</span><span class="s0">class</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">intent.putExtra(LATITUDE</span><span class="s0">,</span><span class="s1">latitude)</span><span class="s0">;</span>
+            <span class="s1">intent.putExtra(LONGITUDE</span><span class="s0">,</span><span class="s1">longitude)</span><span class="s0">;</span>
+            <span class="s1">intent.putExtra(RADIUS</span><span class="s0">,</span><span class="s1">radius)</span><span class="s0">;</span>
+            <span class="s1">startActivityForResult(intent</span><span class="s0">, </span><span class="s1">LAUNCH_SECOND_ACTIVITY)</span><span class="s0">;</span>
+        <span class="s1">})</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onActivityResult(</span><span class="s0">int </span><span class="s1">requestCode</span><span class="s0">, int </span><span class="s1">resultCode</span><span class="s0">, </span><span class="s1">Intent data) {</span>
+        <span class="s0">super</span><span class="s1">.onActivityResult(requestCode</span><span class="s0">, </span><span class="s1">resultCode</span><span class="s0">, </span><span class="s1">data)</span><span class="s0">;</span>
+        <span class="s0">if </span><span class="s1">(requestCode == LAUNCH_SECOND_ACTIVITY) {</span>
+            <span class="s0">if</span><span class="s1">(resultCode == Activity.RESULT_OK){</span>
+                <span class="s1">latitude = data.getDoubleExtra(LATITUDE</span><span class="s0">,</span><span class="s3">0</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">longitude = data.getDoubleExtra(LONGITUDE</span><span class="s0">,</span><span class="s3">0</span><span class="s1">)</span><span class="s0">;</span>
+                <span class="s1">radius = data.getFloatExtra(RADIUS</span><span class="s0">,</span><span class="s3">0</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+            <span class="s0">if </span><span class="s1">(resultCode == Activity.RESULT_CANCELED) {</span>
+                <span class="s2">//Write your code if there's no result</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+<span class="s1">}</span>
+</pre>
+</body>
+</html>

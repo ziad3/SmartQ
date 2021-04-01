@@ -1,0 +1,227 @@
+<html>
+<head>
+<title>EditMapsActivity.java</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<style type="text/css">
+.s0 { color: #cc7832;}
+.s1 { color: #a9b7c6;}
+.s2 { color: #6a8759;}
+.s3 { color: #6897bb;}
+.s4 { color: #808080;}
+.s5 { color: #629755; font-style: italic;}
+</style>
+</head>
+<body bgcolor="#2b2b2b">
+<table CELLSPACING=0 CELLPADDING=5 COLS=1 WIDTH="100%" BGCOLOR="#606060" >
+<tr><td><center>
+<font face="Arial, Helvetica" color="#000000">
+EditMapsActivity.java</font>
+</center></td></tr></table>
+<pre><span class="s0">package </span><span class="s1">com.example.myapplication.activities.company</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">androidx.annotation.NonNull</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.core.app.ActivityCompat</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.core.content.ContextCompat</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">androidx.fragment.app.FragmentActivity</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">android.Manifest</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.app.Activity</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.app.PendingIntent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.Intent</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.content.pm.PackageManager</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.graphics.Color</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.os.Build</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.os.Bundle</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.util.Log</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">android.widget.Toast</span><span class="s0">;</span>
+
+<span class="s0">import </span><span class="s1">com.example.myapplication.R</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.example.myapplication.activities.GeofenceHelper</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.location.Geofence</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.location.GeofencingClient</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.location.GeofencingRequest</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.location.LocationServices</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.maps.CameraUpdateFactory</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.maps.GoogleMap</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.maps.OnMapReadyCallback</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.maps.SupportMapFragment</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.maps.model.CircleOptions</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.maps.model.LatLng</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.maps.model.MarkerOptions</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.tasks.OnFailureListener</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.android.gms.tasks.OnSuccessListener</span><span class="s0">;</span>
+<span class="s0">import </span><span class="s1">com.google.firebase.database.DatabaseReference</span><span class="s0">;</span>
+
+<span class="s0">import static </span><span class="s1">com.example.myapplication.activities.MainLoadingPage.LATITUDE</span><span class="s0">;</span>
+<span class="s0">import static </span><span class="s1">com.example.myapplication.activities.MainLoadingPage.LONGITUDE</span><span class="s0">;</span>
+<span class="s0">import static </span><span class="s1">com.example.myapplication.activities.MainLoadingPage.RADIUS</span><span class="s0">;</span>
+
+<span class="s0">public class </span><span class="s1">EditMapsActivity </span><span class="s0">extends </span><span class="s1">FragmentActivity </span><span class="s0">implements </span><span class="s1">OnMapReadyCallback</span><span class="s0">, </span><span class="s1">GoogleMap.OnMapLongClickListener {</span>
+
+    <span class="s0">private </span><span class="s1">GoogleMap mMap</span><span class="s0">;</span>
+    <span class="s0">private static final </span><span class="s1">String TAG = </span><span class="s2">&quot;MapsActivity&quot;</span><span class="s0">;</span>
+
+    <span class="s0">private float </span><span class="s1">GEOFENCE_RADIUS = </span><span class="s3">1000</span><span class="s0">;</span>
+
+    <span class="s0">private int </span><span class="s1">FINE_LOCATION_ACCESS_REQUEST_CODE = </span><span class="s3">10001</span><span class="s0">;</span>
+    <span class="s0">private int </span><span class="s1">BACKGROUND_LOCATION_ACCESS_REQUEST_CODE = </span><span class="s3">10002</span><span class="s0">;</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">protected void </span><span class="s1">onCreate(Bundle savedInstanceState) {</span>
+        <span class="s0">super</span><span class="s1">.onCreate(savedInstanceState)</span><span class="s0">;</span>
+        <span class="s1">setContentView(R.layout.activity_edit_maps)</span><span class="s0">;</span>
+        <span class="s4">// Obtain the SupportMapFragment and get notified when the map is ready to be used.</span>
+        <span class="s1">SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()</span>
+                <span class="s1">.findFragmentById(R.id.map)</span><span class="s0">;</span>
+        <span class="s1">mapFragment.getMapAsync(</span><span class="s0">this</span><span class="s1">)</span><span class="s0">;</span>
+
+
+    <span class="s1">}</span>
+
+
+    <span class="s5">/**</span>
+     <span class="s5">* Manipulates the map once available.</span>
+     <span class="s5">* This callback is triggered when the map is ready to be used.</span>
+     <span class="s5">* This is where we can add markers or lines, add listeners or move the camera. In this case,</span>
+     <span class="s5">* we just add a marker near Sydney, Australia.</span>
+     <span class="s5">* If Google Play services is not installed on the device, the user will be prompted to install</span>
+     <span class="s5">* it inside the SupportMapFragment. This method will only be triggered once the user has</span>
+     <span class="s5">* installed Google Play services and returned to the app.</span>
+     <span class="s5">*/</span>
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">onMapReady(GoogleMap googleMap) {</span>
+        <span class="s1">mMap = googleMap</span><span class="s0">;</span>
+        <span class="s1">mMap.getUiSettings().setZoomControlsEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+
+        <span class="s4">// Add a marker in Sydney and move the camera</span>
+        <span class="s1">LatLng Riyadh = </span><span class="s0">new </span><span class="s1">LatLng(</span><span class="s3">24.63309385826923</span><span class="s0">, </span><span class="s3">46.55247297137976</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(Riyadh</span><span class="s0">, </span><span class="s3">16</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">mMap.getUiSettings().setZoomControlsEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+
+        <span class="s1">enableUserLocation()</span><span class="s0">;</span>
+
+        <span class="s1">mMap.setOnMapLongClickListener(</span><span class="s0">this</span><span class="s1">)</span><span class="s0">;</span>
+
+        <span class="s1">setCurrentLocationCircle()</span><span class="s0">;</span>
+
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">enableUserLocation() {</span>
+        <span class="s0">if </span><span class="s1">(ContextCompat.checkSelfPermission(</span><span class="s0">this, </span><span class="s1">Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {</span>
+            <span class="s1">mMap.setMyLocationEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+            <span class="s4">//Ask for permission</span>
+            <span class="s0">if </span><span class="s1">(ActivityCompat.shouldShowRequestPermissionRationale(</span><span class="s0">this, </span><span class="s1">Manifest.permission.ACCESS_FINE_LOCATION)) {</span>
+                <span class="s4">//We need to show user a dialog for displaying why the permission is needed and then ask for the permission...</span>
+                <span class="s1">ActivityCompat.requestPermissions(</span><span class="s0">this, new </span><span class="s1">String[]{Manifest.permission.ACCESS_FINE_LOCATION}</span><span class="s0">, </span><span class="s1">FINE_LOCATION_ACCESS_REQUEST_CODE)</span><span class="s0">;</span>
+            <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                <span class="s1">ActivityCompat.requestPermissions(</span><span class="s0">this, new </span><span class="s1">String[]{Manifest.permission.ACCESS_FINE_LOCATION}</span><span class="s0">, </span><span class="s1">FINE_LOCATION_ACCESS_REQUEST_CODE)</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+   <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">onRequestPermissionsResult(</span><span class="s0">int </span><span class="s1">requestCode</span><span class="s0">, </span><span class="s1">@NonNull String[] permissions</span><span class="s0">, </span><span class="s1">@NonNull </span><span class="s0">int</span><span class="s1">[] grantResults) {</span>
+        <span class="s0">super</span><span class="s1">.onRequestPermissionsResult(requestCode</span><span class="s0">, </span><span class="s1">permissions</span><span class="s0">, </span><span class="s1">grantResults)</span><span class="s0">;</span>
+        <span class="s0">if </span><span class="s1">(requestCode == FINE_LOCATION_ACCESS_REQUEST_CODE) {</span>
+            <span class="s0">if </span><span class="s1">(grantResults.length &gt; </span><span class="s3">0 </span><span class="s1">&amp;&amp; grantResults[</span><span class="s3">0</span><span class="s1">] == PackageManager.PERMISSION_GRANTED) {</span>
+                <span class="s4">//We have the permission</span>
+                <span class="s4">// mMap.setMyLocationEnabled(true);</span>
+                <span class="s0">if </span><span class="s1">(ActivityCompat.checkSelfPermission(</span><span class="s0">this, </span><span class="s1">Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &amp;&amp; ActivityCompat.checkSelfPermission(</span><span class="s0">this, </span><span class="s1">Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {</span>
+                    <span class="s4">// TODO: Consider calling</span>
+                    <span class="s4">//    ActivityCompat#requestPermissions</span>
+                    <span class="s4">// here to request the missing permissions, and then overriding</span>
+                    <span class="s4">//   public void onRequestPermissionsResult(int requestCode, String[] permissions,</span>
+                    <span class="s4">//                                          int[] grantResults)</span>
+                    <span class="s4">// to handle the case where the user grants the permission. See the documentation</span>
+                    <span class="s4">// for ActivityCompat#requestPermissions for more details.</span>
+                    <span class="s0">return;</span>
+                <span class="s1">}</span>
+                <span class="s1">mMap.setMyLocationEnabled(</span><span class="s0">true</span><span class="s1">)</span><span class="s0">;</span>
+            <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                <span class="s4">//We do not have the permission..</span>
+
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+
+        <span class="s0">if </span><span class="s1">(requestCode == BACKGROUND_LOCATION_ACCESS_REQUEST_CODE) {</span>
+            <span class="s0">if </span><span class="s1">(grantResults.length &gt; </span><span class="s3">0 </span><span class="s1">&amp;&amp; grantResults[</span><span class="s3">0</span><span class="s1">] == PackageManager.PERMISSION_GRANTED) {</span>
+                <span class="s4">//We have the permission</span>
+                <span class="s1">Toast.makeText(</span><span class="s0">this, </span><span class="s2">&quot;تستطيع الان تحديد النطاق&quot;</span><span class="s0">, </span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span>
+            <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                <span class="s4">//We do not have the permission..</span>
+                <span class="s1">Toast.makeText(</span><span class="s0">this, </span><span class="s2">&quot;يجب السماح لتحديد النطاق&quot;</span><span class="s0">, </span><span class="s1">Toast.LENGTH_SHORT).show()</span><span class="s0">;</span>
+            <span class="s1">}</span>
+        <span class="s1">}</span>
+    <span class="s1">}</span>
+
+    <span class="s1">@Override</span>
+    <span class="s0">public void </span><span class="s1">onMapLongClick(LatLng latLng) {</span>
+        <span class="s0">if </span><span class="s1">(Build.VERSION.SDK_INT &gt;= </span><span class="s3">29</span><span class="s1">) {</span>
+            <span class="s4">//We need background permission</span>
+            <span class="s0">if </span><span class="s1">(ContextCompat.checkSelfPermission(</span><span class="s0">this, </span><span class="s1">Manifest.permission.ACCESS_BACKGROUND_LOCATION) == PackageManager.PERMISSION_GRANTED) {</span>
+                <span class="s1">handleMapLongClick(latLng)</span><span class="s0">;</span>
+            <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                <span class="s0">if </span><span class="s1">(ActivityCompat.shouldShowRequestPermissionRationale(</span><span class="s0">this, </span><span class="s1">Manifest.permission.ACCESS_BACKGROUND_LOCATION)) {</span>
+                    <span class="s4">//We show a dialog and ask for permission</span>
+                    <span class="s1">ActivityCompat.requestPermissions(</span><span class="s0">this, new </span><span class="s1">String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}</span><span class="s0">, </span><span class="s1">BACKGROUND_LOCATION_ACCESS_REQUEST_CODE)</span><span class="s0">;</span>
+                <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+                    <span class="s1">ActivityCompat.requestPermissions(</span><span class="s0">this, new </span><span class="s1">String[]{Manifest.permission.ACCESS_BACKGROUND_LOCATION}</span><span class="s0">, </span><span class="s1">BACKGROUND_LOCATION_ACCESS_REQUEST_CODE)</span><span class="s0">;</span>
+                <span class="s1">}</span>
+            <span class="s1">}</span>
+
+        <span class="s1">} </span><span class="s0">else </span><span class="s1">{</span>
+            <span class="s1">handleMapLongClick(latLng)</span><span class="s0">;</span>
+        <span class="s1">}</span>
+
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">handleMapLongClick(LatLng latLng) {</span>
+        <span class="s1">mMap.clear()</span><span class="s0">;</span>
+        <span class="s1">addMarker(latLng)</span><span class="s0">;</span>
+        <span class="s1">addCircle(latLng</span><span class="s0">, </span><span class="s1">GEOFENCE_RADIUS)</span><span class="s0">;</span>
+        <span class="s1">returnWithInfo(latLng</span><span class="s0">, </span><span class="s1">GEOFENCE_RADIUS)</span><span class="s0">;</span><span class="s4">// return with location info</span>
+        <span class="s4">//addGeofence(latLng, GEOFENCE_RADIUS);</span>
+    <span class="s1">}</span>
+
+
+    <span class="s0">private void </span><span class="s1">addMarker(LatLng latLng) {</span>
+        <span class="s1">MarkerOptions markerOptions = </span><span class="s0">new </span><span class="s1">MarkerOptions().position(latLng)</span><span class="s0">;</span>
+        <span class="s1">mMap.addMarker(markerOptions)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">addCircle(LatLng latLng</span><span class="s0">, float </span><span class="s1">radius) {</span>
+        <span class="s1">CircleOptions circleOptions = </span><span class="s0">new </span><span class="s1">CircleOptions()</span><span class="s0">;</span>
+        <span class="s1">circleOptions.center(latLng)</span><span class="s0">;</span>
+        <span class="s1">circleOptions.radius(radius)</span><span class="s0">;</span>
+        <span class="s1">circleOptions.strokeColor(Color.argb(</span><span class="s3">255</span><span class="s0">, </span><span class="s3">255</span><span class="s0">, </span><span class="s3">0</span><span class="s0">,</span><span class="s3">0</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">circleOptions.fillColor(Color.argb(</span><span class="s3">64</span><span class="s0">, </span><span class="s3">255</span><span class="s0">, </span><span class="s3">0</span><span class="s0">,</span><span class="s3">0</span><span class="s1">))</span><span class="s0">;</span>
+        <span class="s1">circleOptions.strokeWidth(</span><span class="s3">4</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s1">mMap.addCircle(circleOptions)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+
+    <span class="s0">private void </span><span class="s1">setCurrentLocationCircle(){</span>
+        <span class="s4">//get current location from intent</span>
+        <span class="s0">double </span><span class="s1">currentLatitude = getIntent().getDoubleExtra(LATITUDE</span><span class="s0">,</span><span class="s3">0</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s0">double </span><span class="s1">currentLongitude = getIntent().getDoubleExtra(LONGITUDE</span><span class="s0">,</span><span class="s3">0</span><span class="s1">)</span><span class="s0">;</span>
+        <span class="s0">float </span><span class="s1">currentRadius = getIntent().getFloatExtra(RADIUS</span><span class="s0">,</span><span class="s3">0</span><span class="s1">)</span><span class="s0">;</span>
+
+        <span class="s0">if</span><span class="s1">(currentLatitude == </span><span class="s3">0</span><span class="s1">)</span><span class="s4">// no previews location indicated</span>
+            <span class="s0">return;</span>
+
+        <span class="s1">LatLng latLng = </span><span class="s0">new </span><span class="s1">LatLng(currentLatitude</span><span class="s0">,</span><span class="s1">currentLongitude)</span><span class="s0">;</span>
+        <span class="s1">addCircle(latLng</span><span class="s0">,</span><span class="s1">currentRadius)</span><span class="s0">;</span>
+    <span class="s1">}</span>
+
+    <span class="s0">private void </span><span class="s1">returnWithInfo(LatLng latLng</span><span class="s0">, float </span><span class="s1">radius){</span>
+        <span class="s1">Intent returnIntent = </span><span class="s0">new </span><span class="s1">Intent()</span><span class="s0">;</span>
+        <span class="s1">returnIntent.putExtra(LATITUDE</span><span class="s0">,</span><span class="s1">latLng.latitude)</span><span class="s0">;</span>
+        <span class="s1">returnIntent.putExtra(LONGITUDE</span><span class="s0">,</span><span class="s1">latLng.longitude)</span><span class="s0">;</span>
+        <span class="s1">returnIntent.putExtra(RADIUS</span><span class="s0">,</span><span class="s1">radius)</span><span class="s0">;</span>
+        <span class="s1">setResult(Activity.RESULT_OK</span><span class="s0">,</span><span class="s1">returnIntent)</span><span class="s0">;</span>
+        <span class="s1">finish()</span><span class="s0">;</span>
+    <span class="s1">}</span>
+<span class="s1">}</span></pre>
+</body>
+</html>
